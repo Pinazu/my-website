@@ -7,16 +7,17 @@ import { cn } from "@/lib/utils";
 
 interface Message {
   id: string;
-  role: "user" | "bot";
+  role: "user" | "assistant";
   content: string;
-  timestamp: Date;
 }
 
 export function App() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const socketRef = useRef<WebSocket | null>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -26,31 +27,86 @@ export function App() {
     scrollToBottom();
   }, [messages]);
 
+  useEffect(() => {
+    // Create WebSocket connection only once
+    const socket = new WebSocket("ws://localhost:3000/chat");
+    socketRef.current = socket;
+
+    // socket opened
+    socket.addEventListener("open", (event) => {
+      console.log("WebSocket connected", event);
+      setIsConnected(true);
+    });
+
+    // message is received
+    socket.addEventListener("message", (event) => {
+      console.log("Message received:", event.data);
+      try {
+        const data = JSON.parse(event.data);
+
+        if (data.type === "connected") {
+          console.log("Connection confirmed at:", new Date(data.timestamp));
+        } else if (data.type === "error") {
+          console.error("Server error:", data.message);
+          setIsTyping(false);
+        } else if (data.type === "message") {
+          // Handle incoming assistant message
+          const assistantMessage: Message = {
+            id: Date.now().toString(),
+            role: "assistant",
+            content: data.content,
+          };
+          setMessages((prev) => [...prev, assistantMessage]);
+          setIsTyping(false);
+        }
+      } catch (error) {
+        console.error("Error parsing message:", error);
+      }
+    });
+
+    // socket closed
+    socket.addEventListener("close", (event) => {
+      console.log("WebSocket disconnected", event.code, event.reason);
+      setIsConnected(false);
+      setIsTyping(false);
+    });
+
+    // error handler
+    socket.addEventListener("error", (event) => {
+      console.error("WebSocket error:", event);
+      setIsConnected(false);
+      setIsTyping(false);
+    });
+
+    // Cleanup function to close socket when component unmounts
+    return () => {
+      // Close socket regardless of its state to prevent duplicates in StrictMode
+      if (socket.readyState === WebSocket.OPEN || socket.readyState === WebSocket.CONNECTING) {
+        socket.close();
+      }
+    };
+  }, []); // Empty dependency array ensures this runs only once
+
+
   const handleSendMessage = () => {
-    if (!inputValue.trim()) return;
+    if (!inputValue.trim() || !isConnected) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
       role: "user",
       content: inputValue,
-      timestamp: new Date(),
     };
 
     setMessages((prev) => [...prev, userMessage]);
-    setInputValue("");
     setIsTyping(true);
+    setInputValue("");
 
-    // Simulate bot response
-    setTimeout(() => {
-      const botMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: "bot",
-        content: `I received your message: "${inputValue}". This is a demo chatbot template showcasing the UI components.`,
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, botMessage]);
-      setIsTyping(false);
-    }, 1500);
+    // Send message through WebSocket
+    socketRef.current?.send(JSON.stringify({
+      type: "message",
+      content: inputValue,
+      timestamp: Date.now(),
+    }));
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -63,7 +119,7 @@ export function App() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
-      <div className="border-b border-border/40 py-4 px-6">
+      <div className="border-b border-border/40 py-4 px-6 flex items-center justify-between">
       </div>
 
       {/* Messages */}
