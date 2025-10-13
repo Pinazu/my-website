@@ -8,6 +8,14 @@ declare module "*.svg" {
   export = path;
 }
 
+declare module "*.css" {
+  /**
+   * Side-effect import for CSS files
+   */
+  const content: void;
+  export = content;
+}
+
 declare module "*.module.css" {
   /**
    * A record of class names to their corresponding CSS module classes
