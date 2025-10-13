@@ -1,5 +1,5 @@
 import "./index.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -16,9 +16,6 @@ import {
   FileText,
   Brain,
   Target,
-  Twitter,
-  Linkedin,
-  Github,
 } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -583,8 +580,8 @@ export function App() {
                       description:
                         "Enterprise-grade encryption and compliance with SOC 2 standards",
                     },
-                  ].map((benefit, index) => (
-                    <div key={index} className="flex gap-4 group">
+                  ].map((benefit) => (
+                    <div key={benefit.title} className="flex gap-4 group">
                       <div className="relative flex-shrink-0">
                         <div className="absolute inset-0 bg-primary/20 blur-lg rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
                         <div className="relative w-12 h-12 bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl flex items-center justify-center border border-primary/20">
@@ -735,24 +732,6 @@ export function App() {
                 Intelligent financial automation for modern businesses
               </p>
               <div className="flex gap-3">
-                <a
-                  href="#"
-                  className="w-8 h-8 rounded-lg bg-secondary/50 backdrop-blur-sm flex items-center justify-center hover:bg-primary/20 transition-colors cursor-pointer"
-                >
-                  <Twitter className="w-4 h-4" />
-                </a>
-                <a
-                  href="#"
-                  className="w-8 h-8 rounded-lg bg-secondary/50 backdrop-blur-sm flex items-center justify-center hover:bg-primary/20 transition-colors cursor-pointer"
-                >
-                  <Linkedin className="w-4 h-4" />
-                </a>
-                <a
-                  href="#"
-                  className="w-8 h-8 rounded-lg bg-secondary/50 backdrop-blur-sm flex items-center justify-center hover:bg-primary/20 transition-colors cursor-pointer"
-                >
-                  <Github className="w-4 h-4" />
-                </a>
               </div>
             </div>
 
@@ -761,27 +740,27 @@ export function App() {
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li><a href="#features" className="hover:text-foreground transition-colors cursor-pointer">Features</a></li>
                 <li><a href="#pricing" className="hover:text-foreground transition-colors cursor-pointer">Pricing</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors cursor-pointer">Security</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors cursor-pointer">Integrations</a></li>
+                <li><a href="/security" className="hover:text-foreground transition-colors cursor-pointer">Security</a></li>
+                <li><a href="/integrations" className="hover:text-foreground transition-colors cursor-pointer">Integrations</a></li>
               </ul>
             </div>
 
             <div>
               <h4 className="font-semibold mb-4">Company</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-foreground transition-colors cursor-pointer">About</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors cursor-pointer">Blog</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors cursor-pointer">Careers</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors cursor-pointer">Contact</a></li>
+                <li><a href="/about" className="hover:text-foreground transition-colors cursor-pointer">About</a></li>
+                <li><a href="/blog" className="hover:text-foreground transition-colors cursor-pointer">Blog</a></li>
+                <li><a href="/careers" className="hover:text-foreground transition-colors cursor-pointer">Careers</a></li>
+                <li><a href="/contact" className="hover:text-foreground transition-colors cursor-pointer">Contact</a></li>
               </ul>
             </div>
 
             <div>
               <h4 className="font-semibold mb-4">Legal</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-foreground transition-colors cursor-pointer">Privacy</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors cursor-pointer">Terms</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors cursor-pointer">Cookie Policy</a></li>
+                <li><a href="/privacy" className="hover:text-foreground transition-colors cursor-pointer">Privacy</a></li>
+                <li><a href="/terms" className="hover:text-foreground transition-colors cursor-pointer">Terms</a></li>
+                <li><a href="/cookie-policy" className="hover:text-foreground transition-colors cursor-pointer">Cookie Policy</a></li>
               </ul>
             </div>
           </div>
