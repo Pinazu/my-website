@@ -1,4 +1,6 @@
-# bun-react-tailwind-shadcn-template
+# my website
+
+Website that make with Bun, React, Tailwind and, Shadcn.ui/io.
 
 To install dependencies:
 
