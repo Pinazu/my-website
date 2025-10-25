@@ -1,777 +1,426 @@
-import "./index.css";
-import { useEffect, useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import {
-  Bot,
-  Sparkles,
-  Zap,
-  ArrowRight,
-  CheckCircle2,
-  TrendingUp,
-  Shield,
-  Clock,
-  BarChart3,
-  FileText,
-  Brain,
-  Target,
-} from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+// src/App.tsx
+import imgBackground from "../public/assets/background.png";
+import imgVector1 from "../public/assets/vector1.svg";
+import imgMoreButton from "../public/assets/more-button.svg";
+import imgEllipse1 from "../public/assets/ellipse1.svg";
 
-gsap.registerPlugin(ScrollTrigger);
-
-// Interactive particle/circle class
-class Particle {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  radius: number;
-  color: string;
-  opacity: number;
-
-  constructor(canvas: HTMLCanvasElement) {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    // Increased initial velocity for visible movement
-    this.vx = (Math.random() - 0.5) * 2;
-    this.vy = (Math.random() - 0.5) * 2;
-    this.radius = Math.random() * 150 + 100;
-    
-    // Variety of colors - purples, pinks, blues, indigos
-    const colors = [
-      'rgba(139, 92, 246, 0.4)',   // primary purple
-      'rgba(168, 85, 247, 0.4)',   // accent purple
-      'rgba(219, 39, 119, 0.35)',  // pink
-      'rgba(236, 72, 153, 0.35)',  // lighter pink
-      'rgba(124, 58, 237, 0.4)',   // violet
-      'rgba(99, 102, 241, 0.35)',  // indigo
-      'rgba(59, 130, 246, 0.35)',  // blue
-      'rgba(147, 51, 234, 0.4)',   // purple
-    ];
-    const randomIndex = Math.floor(Math.random() * colors.length);
-    this.color = colors[randomIndex] ?? colors[0] ?? 'rgba(139, 92, 246, 0.4)';
-    this.opacity = Math.random() * 0.5 + 0.3;
-  }
-
-  update(canvas: HTMLCanvasElement, mouseX: number, mouseY: number) {
-    // Calculate distance to mouse
-    const dx = mouseX - this.x;
-    const dy = mouseY - this.y;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-    
-    // Interactive: move away from mouse when close
-    if (distance < 200) {
-      const force = (200 - distance) / 200;
-      this.vx -= (dx / distance) * force * 0.2;
-      this.vy -= (dy / distance) * force * 0.2;
-    }
-
-    // Update position
-    this.x += this.vx;
-    this.y += this.vy;
-
-    // Boundary bouncing
-    if (this.x < -this.radius) this.x = canvas.width + this.radius;
-    if (this.x > canvas.width + this.radius) this.x = -this.radius;
-    if (this.y < -this.radius) this.y = canvas.height + this.radius;
-    if (this.y > canvas.height + this.radius) this.y = -this.radius;
-
-    // Damping - reduced for more active movement
-    this.vx *= 0.995;
-    this.vy *= 0.995;
-
-    // Add more random movement to keep it interesting and dynamic
-    this.vx += (Math.random() - 0.5) * 0.15;
-    this.vy += (Math.random() - 0.5) * 0.15;
-
-    // Limit velocity - increased for faster movement
-    const maxSpeed = 3;
-    const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
-    if (speed > maxSpeed) {
-      this.vx = (this.vx / speed) * maxSpeed;
-      this.vy = (this.vy / speed) * maxSpeed;
-    }
-  }
-
-  draw(ctx: CanvasRenderingContext2D) {
-    const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
-    gradient.addColorStop(0, this.color);
-    gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-    
-    ctx.fillStyle = gradient;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    ctx.fill();
-  }
-}
-
-export function App() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const featuresRef = useRef<HTMLDivElement>(null);
-  const statsRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const mousePosRef = useRef({ x: 0, y: 0 });
-
-  // Interactive background animation
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    // Set canvas size
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    // Create particles with more variety
-    const particles: Particle[] = [];
-    const particleCount = 15; // Increased number of circles for more visual interest
-    for (let i = 0; i < particleCount; i++) {
-      particles.push(new Particle(canvas));
-    }
-
-    // Track mouse position using ref to avoid re-renders
-    const handleMouseMove = (e: MouseEvent) => {
-      mousePosRef.current = { x: e.clientX, y: e.clientY };
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-
-    // Animation loop
-    let animationFrameId: number;
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      particles.forEach(particle => {
-        particle.update(canvas, mousePosRef.current.x, mousePosRef.current.y);
-        particle.draw(ctx);
-      });
-
-      animationFrameId = requestAnimationFrame(animate);
-    };
-    animate();
-
-    return () => {
-      window.removeEventListener('resize', resizeCanvas);
-      window.removeEventListener('mousemove', handleMouseMove);
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, []);
-
-  // GSAP animations
-  useEffect(() => {
-    // Set initial visibility to prevent flash
-    gsap.set("[data-animate]", { opacity: 1 });
-    
-    // Hero animation with fade
-    if (heroRef.current) {
-      const elements = heroRef.current.querySelectorAll("[data-animate]");
-      gsap.fromTo(elements, 
-        {
-          opacity: 0,
-          y: 40,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          stagger: 0.15,
-          ease: "power3.out",
-        }
-      );
-    }
-
-    // Features animation with scroll trigger
-    if (featuresRef.current) {
-      const cards = featuresRef.current.querySelectorAll("[data-feature]");
-      gsap.fromTo(cards,
-        {
-          opacity: 0,
-          y: 60,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          scrollTrigger: {
-            trigger: featuresRef.current,
-            start: "top 70%",
-          },
-          duration: 0.8,
-          stagger: 0.1,
-          ease: "power2.out",
-        }
-      );
-    }
-
-    // Stats animation with scroll trigger
-    if (statsRef.current) {
-      const stats = statsRef.current.querySelectorAll("[data-stat]");
-      gsap.fromTo(stats,
-        {
-          opacity: 0,
-          scale: 0.8,
-        },
-        {
-          opacity: 1,
-          scale: 1,
-          scrollTrigger: {
-            trigger: statsRef.current,
-            start: "top 80%",
-          },
-          duration: 0.6,
-          stagger: 0.1,
-          ease: "back.out(1.7)",
-        }
-      );
-    }
-  }, []);
-
+export default function App() {
   return (
-    <div className="relative min-h-screen bg-background text-foreground overflow-hidden">
-      {/* Interactive Animated Background Canvas */}
-      <canvas
-        ref={canvasRef}
-        className="fixed inset-0 w-full h-full pointer-events-none"
-        style={{ filter: 'blur(40px)', opacity: 1 }}
-      />
+    <div className="bg-white relative w-full min-h-screen overflow-x-hidden" data-name="Main page" data-node-id="1:13">
+      <div className="absolute bg-[#f7f3f3] border border-black border-solid h-[8104px] left-0 top-0 w-full max-w-[1440px]" data-node-id="1:14" />
 
-      {/* Content */}
-      <div className="relative z-10">
-        {/* Navigation */}
-        <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-background/50 border-b border-border/50">
-          <div className="container mx-auto px-4 lg:px-8">
-            <div className="flex items-center justify-between h-16">
-              <div className="flex items-center gap-3">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full" />
-                  <div className="relative w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center">
-                    <Bot className="w-6 h-6 text-primary-foreground" />
-                  </div>
-                </div>
-                <span className="text-xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-                  AI Bookkeeping
-                </span>
-              </div>
-
-              <div className="hidden md:flex items-center gap-8">
-                <a
-                  href="#features"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-                >
-                  Features
-                </a>
-                <a
-                  href="#benefits"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-                >
-                  Benefits
-                </a>
-                <a
-                  href="#pricing"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-                >
-                  Pricing
-                </a>
-                <Button className="relative group overflow-hidden">
-                  <span className="relative z-10">Get Started</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-accent to-primary opacity-0 group-hover:opacity-100 transition-opacity" />
-                </Button>
-              </div>
+      {/* Main Title */}
+      <div className="absolute h-[260px] left-[calc(8.333%+113px)] top-[268px] w-[1074px] max-w-[calc(100%-226px)]" data-name="Main Title" data-node-id="15:108">
+        <div className="absolute h-[813px] left-[-232px] top-[-177px] w-[1440px]" data-node-id="15:136" />
+        <div className="absolute h-[904px] left-[-233px] top-[-268px] w-[1441px]" data-name="Background" data-node-id="33:28">
+          <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+            <div className="absolute inset-0 overflow-hidden">
+              <img alt="" className="absolute h-full left-[-0.01%] max-w-none top-0 w-[111.12%]" src={imgBackground} />
             </div>
+            <div className="absolute inset-0" />
           </div>
-        </nav>
+        </div>
+        <div className="absolute font-['Capriola',sans-serif] h-[260px] leading-[1.3] left-0 text-[100px] text-black top-0 w-[1074px]" data-node-id="1:25">
+          <p className="mb-0">Your taxes, </p>
+          <p className="m-0">automated with AI</p>
+        </div>
+        <div className="absolute h-[36px] left-[258px] top-[112px] w-[301px]" data-node-id="1:104">
+          <div className="absolute inset-[-8.33%_-1%]">
+            <img alt="" className="block max-w-none size-full" src={imgVector1} />
+          </div>
+        </div>
+        <div className="absolute bg-[#f4d06f] h-[50px] left-0 rounded-[30px] top-[288px] w-[172px]" data-node-id="17:151" />
+        <div className="absolute flex flex-col font-['Inter',sans-serif] font-semibold justify-center leading-[0] left-[31px] text-[20px] text-black text-nowrap top-[313px] translate-y-[-50%]" data-node-id="17:152">
+          <p className="leading-[1.3] whitespace-pre m-0">Book demo</p>
+        </div>
+      </div>
 
-        {/* Hero Section */}
-        <section className="container mx-auto px-4 lg:px-8 pt-32 pb-20 md:pt-40 md:pb-32">
-          <div ref={heroRef} className="max-w-5xl mx-auto text-center space-y-8">
-            <div data-animate>
-              <Badge
-                variant="secondary"
-                className="backdrop-blur-sm bg-secondary/50 border border-border/50 px-4 py-2"
-              >
-                <Sparkles className="w-4 h-4 mr-2" />
-                AI-Powered Financial Intelligence
-              </Badge>
-            </div>
+      {/* Features Section */}
+      <div className="absolute h-[1176px] left-0 top-[904px] w-full max-w-[1440px]" data-name="Features Section" data-node-id="15:138">
+        <div className="absolute bg-[#0a0903] h-[1176px] left-0 top-0 w-full" data-name="Background" data-node-id="15:134" />
+        <div className="absolute bg-[#f7f7f3] h-[592px] left-[97px] rounded-[20px] top-[162px] w-[826px]" data-node-id="33:45" />
+        <div className="absolute h-[592px] left-[67px] rounded-[20px] top-[133px] w-[826px]" data-name="Background Preview" data-node-id="33:30" style={{ backgroundImage: "url('data:image/svg+xml;utf8,<svg viewBox=\\'0 0 826 592\\' xmlns=\\'http://www.w3.org/2000/svg\\' preserveAspectRatio=\\'none\\'><g transform=\\'matrix(32.145 50.198 -73.057 51.835 413.5 296.53)\\' opacity=\\'0.4000000059604645\\'><rect height=\\'75.637\\' width=\\'153.29\\' fill=\\'url(%23grad)\\' id=\\'quad\\' shape-rendering=\\'crispEdges\\'/><use href=\\'%23quad\\' transform=\\'scale(1 -1)\\'/><use href=\\'%23quad\\' transform=\\'scale(-1 1)\\'/><use href=\\'%23quad\\' transform=\\'scale(-1 -1)\\'/></g><defs><linearGradient id=\\'grad\\' gradientUnits=\\'userSpaceOnUse\\' x2=\\'5\\' y2=\\'5\\'><stop stop-color=\\'rgba(0,145,173,1)\\' offset=\\'0\\'/><stop stop-color=\\'rgba(16,151,176,1)\\' offset=\\'0.0625\\'/><stop stop-color=\\'rgba(32,157,180,1)\\' offset=\\'0.125\\'/><stop stop-color=\\'rgba(64,170,187,1)\\' offset=\\'0.25\\'/><stop stop-color=\\'rgba(96,182,194,1)\\' offset=\\'0.375\\'/><stop stop-color=\\'rgba(128,195,201,1)\\' offset=\\'0.5\\'/><stop stop-color=\\'rgba(191,219,214,1)\\' offset=\\'0.75\\'/><stop stop-color=\\'rgba(255,244,228,1)\\' offset=\\'1\\'/></linearGradient></defs></svg>')" }} />
+        <p className="absolute font-['Capriola',sans-serif] h-[106px] leading-[1.3] left-[97px] text-[#f7f3f3] text-[40px] top-[783px] w-[821px] m-0" data-node-id="15:120">
+          Introducing BeeBlast — your effortless tax assistant.
+        </p>
+        <p className="absolute font-['Capriola',sans-serif] h-[115px] leading-[1.3] left-[948px] text-[#70757a] text-[40px] top-[610px] w-[395px] m-0" data-node-id="15:149">
+          Built for freelancers and small business
+        </p>
+        <p className="absolute font-['Capriola',sans-serif] h-[115px] leading-[1.3] left-[948px] text-[#414447] text-[40px] top-[797px] w-[395px] m-0" data-node-id="15:151">
+          Quisque tincidunt elit ultricies quam
+        </p>
+        <div className="absolute h-[304px] left-[948px] top-[323px] w-[395px]" data-name="Feature Description" data-node-id="16:32">
+          <div className="absolute bg-[#0a0903] border border-black border-solid h-[279px] left-0 rounded-[20px] top-0 w-[395px]" data-node-id="15:142" />
+          <p className="absolute font-['Capriola',sans-serif] leading-[1.3] left-0 text-[#f7f3f3] text-[40px] top-0 w-[395px] m-0" data-node-id="15:114">
+            Auto-classified. Verified. Filed.
+          </p>
+          <p className="absolute font-['Capriola',sans-serif] h-[130px] leading-[1.3] left-0 text-[#f7f3f3] text-[20px] top-[152px] w-[395px] m-0" data-node-id="15:148">BeeBlast automatically scans your receipts, invoices, and bank transactions, then prepares compliant tax reports — all within minutes. </p>
+        </div>
+        <p className="absolute font-['Capriola',sans-serif] h-[116px] leading-[1.3] left-[948px] text-[#1e1f21] text-[40px] top-[927px] w-[395px] m-0" data-node-id="15:153">
+          Mauris dolor odio, rutrum
+        </p>
+      </div>
 
-            <h1
-              data-animate
-              className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.1] text-foreground"
-            >
-              Bookkeeping{" "}
-              <span className="block mt-2 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient" style={{ WebkitTextFillColor: 'transparent', WebkitBackgroundClip: 'text' }}>
-                Reimagined
-              </span>
-            </h1>
+      {/* Success Metric Section */}
+      <div className="absolute h-[879px] left-0 top-[2080px] w-full max-w-[1440px]" data-name="Success Metric Section" data-node-id="17:33">
+        <div className="absolute bg-[#0a0903] h-[879px] left-0 top-0 w-full" data-name="Background" data-node-id="17:32" />
+        <div className="absolute h-[121px] left-[96px] rounded-[20px] top-[502px] w-[394px]" data-name="First Feature" data-node-id="17:53">
+          <div className="absolute bg-[#211e0a] h-[121px] left-0 rounded-[20px] top-0 w-[394px]" data-name="Background" data-node-id="17:38" />
+          <div className="absolute flex flex-col font-['Capriola',sans-serif] h-[121px] justify-center leading-[0] left-[197px] text-[#f7f3f3] text-[20px] text-center top-[60.5px] translate-x-[-50%] translate-y-[-50%] w-[394px]" data-node-id="17:35">
+            <p className="leading-[1.3] m-0">100% Accuracy</p>
+          </div>
+        </div>
+        <div className="absolute h-[121px] left-[523px] top-[502px] w-[394px]" data-name="Second Feature" data-node-id="17:54">
+          <div className="absolute bg-[#211e0a] h-[121px] left-0 rounded-[20px] top-0 w-[394px]" data-name="Background" data-node-id="17:39" />
+          <div className="absolute flex flex-col font-['Capriola',sans-serif] h-[121px] justify-center leading-[0] left-[197px] text-[#f7f3f3] text-[20px] text-center top-[60.5px] translate-x-[-50%] translate-y-[-50%] w-[394px]" data-node-id="17:45">
+            <p className="leading-[1.3] m-0">90% less time spent on bookkeeping</p>
+          </div>
+        </div>
+        <div className="absolute h-[121px] left-[950px] top-[502px] w-[394px]" data-name="Third Feature" data-node-id="17:55">
+          <div className="absolute bg-[#211e0a] h-[121px] left-0 rounded-[20px] top-0 w-[394px]" data-name="Background" data-node-id="17:41" />
+          <div className="absolute flex flex-col font-['Capriola',sans-serif] h-[121px] justify-center leading-[0] left-[197px] text-[#f7f3f3] text-[20px] text-center top-[60.5px] translate-x-[-50%] translate-y-[-50%] w-[394px]" data-node-id="17:49">
+            <p className="leading-[1.3] m-0">50% Less expense</p>
+          </div>
+        </div>
+        <div className="absolute bg-[#f4d06f] h-[51px] left-[690px] rounded-[30px] top-[174px] w-[123px]" data-node-id="17:130" />
+        <div className="absolute bg-[#f4d06f] h-[51px] left-[899px] rounded-[30px] top-[71px] w-[86px]" data-node-id="33:73" />
+        <div className="absolute bg-[#f4d06f] h-[53px] left-[198px] rounded-[30px] top-[228px] w-[203px]" data-node-id="33:69" />
+        <div className="absolute bg-[#f4d06f] h-[53px] left-[353px] rounded-[30px] top-[122px] w-[383px]" data-node-id="33:71" />
+        <div className="absolute font-['Inter',sans-serif] font-semibold h-[207px] leading-[0] left-[198px] text-[#f7f3f3] text-[0px] top-[71px] w-[831px]" data-node-id="17:57">
+          <p className="font-['Capriola',sans-serif] leading-[1.3] mb-0 text-[40px]">
+            <span>We design BeeBlast so that you do </span>
+            <span className="text-[#0a0903]">not</span>
+            <span> need to </span>
+            <span className="text-[#0a0903]">worry about taxes</span>
+            <span>, bookkepping accounting and can just </span>
+            <span className="text-[#0a0903]">focus</span>
+            <span> on your</span>
+          </p>
+          <p className="font-['Capriola',sans-serif] leading-[1.3] text-[40px] m-0">
+            <span className="text-[#0a0903]"> business.</span>
+          </p>
+        </div>
+      </div>
 
-            <p
-              data-animate
-              className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed"
-            >
-              Let AI handle your finances while you focus on growth. Automated,
-              intelligent, and always accurate.
+      {/* Security Section */}
+      <div className="absolute h-[879px] left-0 top-[2959px] w-full max-w-[1440px]" data-name="Security Section" data-node-id="17:162">
+        <div className="absolute bg-[#0a0903] h-[879px] left-0 top-0 w-full" data-node-id="17:157" />
+        <p className="absolute font-['Capriola',sans-serif] h-[107px] leading-[1.3] left-[203px] text-[40px] text-white top-[75px] w-[394px] m-0" data-node-id="17:158">
+          We priority your security and data.
+        </p>
+        <p className="absolute font-['Capriola',sans-serif] h-[124px] leading-[1.3] left-[629px] text-[20px] text-white top-[84px] w-[715px] m-0" data-node-id="17:159">
+          BeeBlast is built with privacy-first principles and enterprise-grade encryption — so you stay fully in control of your data at all times.
+        </p>
+        <div className="absolute flex flex-col font-['Capriola',sans-serif] h-[74px] justify-center leading-[1.3] left-[96px] text-[#f7f3f3] text-[40px] top-[767px] translate-y-[-50%] w-[1248px]" data-node-id="17:161">
+          <p className="mb-0">Security isn't optional for us</p>
+          <p className="m-0">It's at the core of everything we build.</p>
+        </div>
+        <div className="absolute font-['Capriola',sans-serif] h-[445px] leading-[1.3] left-[629px] text-[20px] text-white top-[162px] w-[713px]" data-node-id="17:164">
+          <p className="mb-0">BeeBlast protects your data with end-to-end encryption (AES-256, TLS 1.3) and strict access control.</p>
+          <p className="mb-0">
+            <br aria-hidden="true" />
+             You always own and control your data — choose to keep or permanently delete it anytime.
+          </p>
+          <p className="mb-0">
+            <br aria-hidden="true" />
+             BeeBlast meets major security standards including GDPR, ISO 27001, and SOC 2 Type II compliance. You can follow this link for verified it yourself.
+          </p>
+          <p className="mb-0">
+            <br aria-hidden="true" />
+             Our Attribute-Based Access Control (ABAC) ensures precise permissions for every user and workspace.
+          </p>
+          <p className="mb-0">
+            <br aria-hidden="true" />
+             Comprehensive logging and tracing let you monitor your agent's actions and your own activity in real time.
+          </p>
+          <p className="m-0">
+            <br aria-hidden="true" />
+             We never sell, store, or use your data for AI model training — your information stays yours, always.
+          </p>
+        </div>
+        <div className="absolute contents left-[265px] top-[298px]" data-name="Decorator" data-node-id="33:68">
+          <div className="absolute bg-[#f7f3f3] h-[74.161px] left-[332.5px] top-[372.16px] w-[67.5px]" data-node-id="33:60" />
+          <div className="absolute bg-[#f4d06f] h-[74.161px] left-[400px] top-[372.16px] w-[67.5px]" data-node-id="33:61" />
+          <div className="absolute bg-[#90959a] h-[74.161px] left-[265px] top-[372.16px] w-[67.5px]" data-node-id="33:62" />
+          <div className="absolute bg-[#1098f7] h-[74.161px] left-[400px] top-[298px] w-[67.5px]" data-node-id="33:63" />
+          <div className="absolute bg-[#ff9f1c] h-[74.161px] left-[467.5px] top-[372.16px] w-[67.5px]" data-node-id="33:64" />
+          <div className="absolute bg-[#211e0a] h-[74.161px] left-[265px] top-[298px] w-[67.5px]" data-node-id="33:65" />
+          <div className="absolute bg-[#d6efff] h-[74.161px] left-[400px] top-[446.32px] w-[67.5px]" data-node-id="33:66" />
+        </div>
+      </div>
+
+      {/* Experience Section */}
+      <div className="absolute h-[1800px] left-0 top-[3838px] w-full max-w-[1440px]" data-name="Experience Section" data-node-id="17:61">
+        <div className="absolute h-[900px] left-0 top-0 w-full" data-name="Up Background" data-node-id="17:60" style={{ backgroundImage: "linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%), url('data:image/svg+xml;utf8,<svg viewBox=\\'0 0 1440 900\\' xmlns=\\'http://www.w3.org/2000/svg\\' preserveAspectRatio=\\'none\\'><g transform=\\'matrix(40.6 57.35 -91.76 64.96 720 450)\\' opacity=\\'0.30000001192092896\\'><rect height=\\'101.62\\' width=\\'211.8\\' fill=\\'url(%23grad)\\' id=\\'quad\\' shape-rendering=\\'crispEdges\\'/><use href=\\'%23quad\\' transform=\\'scale(1 -1)\\'/><use href=\\'%23quad\\' transform=\\'scale(-1 1)\\'/><use href=\\'%23quad\\' transform=\\'scale(-1 -1)\\'/></g><defs><linearGradient id=\\'grad\\' gradientUnits=\\'userSpaceOnUse\\' x2=\\'5\\' y2=\\'5\\'><stop stop-color=\\'rgba(0,145,173,1)\\' offset=\\'0\\'/><stop stop-color=\\'rgba(16,151,176,1)\\' offset=\\'0.0625\\'/><stop stop-color=\\'rgba(32,157,180,1)\\' offset=\\'0.125\\'/><stop stop-color=\\'rgba(64,170,187,1)\\' offset=\\'0.25\\'/><stop stop-color=\\'rgba(96,182,194,1)\\' offset=\\'0.375\\'/><stop stop-color=\\'rgba(128,195,201,1)\\' offset=\\'0.5\\'/><stop stop-color=\\'rgba(191,219,214,1)\\' offset=\\'0.75\\'/><stop stop-color=\\'rgba(255,244,228,1)\\' offset=\\'1\\'/></linearGradient></defs></svg>'), linear-gradient(121.991deg, rgb(5, 115, 241) 0%, rgb(251, 207, 112) 99.992%)" }} />
+        <div className="absolute flex flex-col font-['Capriola',sans-serif] h-[98px] justify-center leading-[1.3] left-[202px] text-[#f7f3f3] text-[40px] top-[135px] translate-y-[-50%] w-[821px]" data-node-id="17:59">
+          <p className="mb-0">But, </p>
+          <p className="m-0">we also care about your experiences</p>
+        </div>
+        <div className="absolute flex flex-col font-['Capriola',sans-serif] h-[139px] justify-center leading-[0] left-[737px] text-[#f7f3f3] text-[40px] top-[380.5px] translate-y-[-50%] w-[607px]" data-node-id="17:68">
+          <p className="leading-[1.3] m-0">We want to bring seemless interaction between BeeBlast and your business</p>
+        </div>
+        <div className="absolute h-[900px] left-0 top-[900px] w-full" data-name="Down Background" data-node-id="17:71" style={{ backgroundImage: "linear-gradient(229.418deg, rgba(251, 207, 112, 0.2) 4.1696%, rgba(0, 0, 0, 0) 23.028%), linear-gradient(194.896deg, rgba(0, 145, 173, 0.2) 73.4%, rgba(234, 255, 0, 0.2) 81.87%), linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%), url('data:image/svg+xml;utf8,<svg viewBox=\\'0 0 1440 900\\' xmlns=\\'http://www.w3.org/2000/svg\\' preserveAspectRatio=\\'none\\'><g transform=\\'matrix(-31.15 52.85 -84.56 -49.84 720 450)\\' opacity=\\'0.30000001192092896\\'><rect height=\\'164.3\\' width=\\'126.03\\' fill=\\'url(%23grad)\\' id=\\'quad\\' shape-rendering=\\'crispEdges\\'/><use href=\\'%23quad\\' transform=\\'scale(1 -1)\\'/><use href=\\'%23quad\\' transform=\\'scale(-1 1)\\'/><use href=\\'%23quad\\' transform=\\'scale(-1 -1)\\'/></g><defs><linearGradient id=\\'grad\\' gradientUnits=\\'userSpaceOnUse\\' x2=\\'5\\' y2=\\'5\\'><stop stop-color=\\'rgba(0,145,173,1)\\' offset=\\'0\\'/><stop stop-color=\\'rgba(16,151,176,1)\\' offset=\\'0.0625\\'/><stop stop-color=\\'rgba(32,157,180,1)\\' offset=\\'0.125\\'/><stop stop-color=\\'rgba(64,170,187,1)\\' offset=\\'0.25\\'/><stop stop-color=\\'rgba(96,182,194,1)\\' offset=\\'0.375\\'/><stop stop-color=\\'rgba(128,195,201,1)\\' offset=\\'0.5\\'/><stop stop-color=\\'rgba(191,219,214,1)\\' offset=\\'0.75\\'/><stop stop-color=\\'rgba(255,244,228,1)\\' offset=\\'1\\'/></linearGradient></defs></svg>'), linear-gradient(57.9946deg, rgb(5, 115, 241) 0%, rgb(251, 207, 112) 100%)" }} />
+        <div className="absolute bg-[#f7f7f3] h-[592px] left-[518px] rounded-[20px] top-[604px] w-[826px]" data-node-id="17:75" />
+        <div className="absolute h-[585px] left-[551px] rounded-[20px] top-[577px] w-[828px]" data-name="Preview Feature" data-node-id="17:155" style={{ backgroundImage: "url('data:image/svg+xml;utf8,<svg viewBox=\\'0 0 828 585\\' xmlns=\\'http://www.w3.org/2000/svg\\' preserveAspectRatio=\\'none\\'><rect x=\\'0\\' y=\\'0\\' height=\\'100%\\' width=\\'100%\\' fill=\\'url(%23grad)\\' opacity=\\'0.30000001192092896\\'/><defs><radialGradient id=\\'grad\\' gradientUnits=\\'userSpaceOnUse\\' cx=\\'0\\' cy=\\'0\\' r=\\'10\\' gradientTransform=\\'matrix(2.535e-15 29.25 -41.4 1.791e-15 414 292.5)\\'><stop stop-color=\\'rgba(88,208,243,1)\\' offset=\\'0\\'/><stop stop-color=\\'rgba(127,208,210,1)\\' offset=\\'0.25\\'/><stop stop-color=\\'rgba(166,208,177,1)\\' offset=\\'0.5\\'/><stop stop-color=\\'rgba(205,208,144,1)\\' offset=\\'0.75\\'/><stop stop-color=\\'rgba(244,208,111,1)\\' offset=\\'1\\'/></radialGradient></defs></svg>')" }} />
+        <div className="absolute h-[714px] left-[97px] top-[728px] w-[395px]" data-name="Features" data-node-id="17:84">
+          <p className="absolute font-['Capriola',sans-serif] h-[121px] leading-[1.3] left-0 text-[40px] text-[rgba(247,243,243,0.6)] top-[304px] w-[395px] m-0" data-node-id="17:76">
+            Integer at quam euismod
+          </p>
+          <p className="absolute font-['Capriola',sans-serif] h-[115px] leading-[1.3] left-0 text-[40px] text-[rgba(247,243,243,0.3)] top-[454px] w-[395px] m-0" data-node-id="17:77">
+            Quisque tincidunt elit ultricies quam
+          </p>
+          <div className="absolute h-[304px] left-0 top-0 w-[395px]" data-name="Feature Description" data-node-id="17:78">
+            <div className="absolute bg-[rgba(10,9,3,0)] h-[279px] left-0 rounded-[20px] top-0 w-[395px]" data-node-id="17:79" />
+            <p className="absolute font-['Capriola',sans-serif] leading-[1.3] left-0 text-[#f7f3f3] text-[40px] top-0 w-[395px] m-0" data-node-id="17:80">
+              Aenean eget metus vitae tortor placera
             </p>
+            <p className="absolute font-['Capriola',sans-serif] h-[130px] leading-[1.3] left-0 text-[#f7f3f3] text-[20px] top-[152px] w-[395px] m-0" data-node-id="17:81">
+              Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; In hac habitasse platea dictumst. Duis at iaculis diam
+            </p>
+          </div>
+          <p className="absolute font-['Capriola',sans-serif] h-[116px] leading-[1.3] left-0 text-[40px] text-[rgba(247,243,243,0.1)] top-[598px] w-[395px] m-0" data-node-id="17:82">
+            Mauris dolor odio, rutrum
+          </p>
+        </div>
+        <div className="absolute flex flex-col font-['Capriola',sans-serif] justify-center leading-[1.3] left-[202px] text-[40px] text-nowrap text-white top-[1600px] translate-y-[-50%] whitespace-pre" data-node-id="17:154">
+          <p className="mb-0">BeeBlast is your employee, </p>
+          <p className="m-0">you are fully in control</p>
+        </div>
+      </div>
 
-            <div data-animate className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <Button size="lg" className="group text-base px-8 h-12 relative overflow-hidden">
-                <span className="relative z-10 flex items-center gap-2">
-                  Start Free Trial
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-accent to-primary opacity-0 group-hover:opacity-100 transition-opacity" />
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="text-base px-8 h-12 backdrop-blur-sm border-border/50 hover:bg-secondary/50"
-              >
-                <Zap className="w-4 h-4 mr-2" />
-                Watch Demo
-              </Button>
-            </div>
-
-            <div
-              data-animate
-              className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground pt-8"
-            >
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-primary" />
-                No credit card required
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-primary" />
-                14-day free trial
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-primary" />
-                Cancel anytime
-              </div>
+      {/* Discovery Section */}
+      <div className="absolute h-[810px] left-0 top-[5638px] w-full max-w-[1440px]" data-name="Discovery Section" data-node-id="17:100">
+        <div className="absolute bg-[#0a0903] h-[810px] left-0 top-0 w-full" data-name="Background" data-node-id="17:99" />
+        <div className="absolute flex flex-col font-['Capriola',sans-serif] h-[29px] justify-center leading-[0] left-[96px] text-[#f7f3f3] text-[20px] top-[150.5px] translate-y-[-50%] w-[181px]" data-node-id="17:101">
+          <p className="leading-[1.3] m-0">Discovery more</p>
+        </div>
+        <div className="absolute h-[432px] left-[96px] top-[198px] w-[395px]" data-name="News Left" data-node-id="17:120">
+          <div className="absolute flex h-[300px] items-center justify-center left-px top-0 w-[395px]">
+            <div className="flex-none scale-y-[-100%]">
+              <div className="h-[300px] rounded-[20px] w-[395px]" data-node-id="17:103" style={{ backgroundImage: "linear-gradient(209.358deg, rgba(0, 0, 0, 0) 58.372%, rgba(242, 230, 0, 0.2) 76.523%), linear-gradient(190.599deg, rgba(233, 236, 245, 0.3) 9.8843%, rgba(204, 214, 235, 0.3) 57.218%), linear-gradient(141.089deg, rgba(163, 195, 217, 0.3) 3.6358%, rgba(239, 11, 11, 0.3) 77.695%), url('data:image/svg+xml;utf8,<svg viewBox=\\'0 0 395 300\\' xmlns=\\'http://www.w3.org/2000/svg\\' preserveAspectRatio=\\'none\\'><g transform=\\'matrix(-3.9 6.25 -19.513 -12.176 198 121.5)\\' opacity=\\'0.4000000059604645\\'><rect height=\\'204.65\\' width=\\'345.72\\' fill=\\'url(%23grad)\\' id=\\'quad\\' shape-rendering=\\'crispEdges\\'/><use href=\\'%23quad\\' transform=\\'scale(1 -1)\\'/><use href=\\'%23quad\\' transform=\\'scale(-1 1)\\'/><use href=\\'%23quad\\' transform=\\'scale(-1 -1)\\'/></g><defs><linearGradient id=\\'grad\\' gradientUnits=\\'userSpaceOnUse\\' x2=\\'5\\' y2=\\'5\\'><stop stop-color=\\'rgba(163,195,217,1)\\' offset=\\'0\\'/><stop stop-color=\\'rgba(178,200,167,1)\\' offset=\\'0.25\\'/><stop stop-color=\\'rgba(194,204,116,1)\\' offset=\\'0.5\\'/><stop stop-color=\\'rgba(209,209,66,1)\\' offset=\\'0.75\\'/><stop stop-color=\\'rgba(217,212,41,1)\\' offset=\\'0.875\\'/><stop stop-color=\\'rgba(224,214,16,1)\\' offset=\\'1\\'/></linearGradient></defs></svg>'), url('data:image/svg+xml;utf8,<svg viewBox=\\'0 0 395 300\\' xmlns=\\'http://www.w3.org/2000/svg\\' preserveAspectRatio=\\'none\\'><g transform=\\'matrix(-7.85 3.5 -9.6608 -21.668 94 165.5)\\' opacity=\\'1\\'><rect height=\\'175.31\\' width=\\'417.6\\' fill=\\'url(%23grad)\\' id=\\'quad\\' shape-rendering=\\'crispEdges\\'/><use href=\\'%23quad\\' transform=\\'scale(1 -1)\\'/><use href=\\'%23quad\\' transform=\\'scale(-1 1)\\'/><use href=\\'%23quad\\' transform=\\'scale(-1 -1)\\'/></g><defs><linearGradient id=\\'grad\\' gradientUnits=\\'userSpaceOnUse\\' x2=\\'5\\' y2=\\'5\\'><stop stop-color=\\'rgba(233,236,245,1)\\' offset=\\'0\\'/><stop stop-color=\\'rgba(225,219,199,1)\\' offset=\\'0.25\\'/><stop stop-color=\\'rgba(216,201,152,1)\\' offset=\\'0.5\\'/><stop stop-color=\\'rgba(208,184,106,1)\\' offset=\\'0.75\\'/><stop stop-color=\\'rgba(199,167,59,1)\\' offset=\\'1\\'/></linearGradient></defs></svg>')" }} />
             </div>
           </div>
-        </section>
-
-        {/* Stats Section */}
-        <section ref={statsRef} className="container mx-auto px-4 lg:px-8 py-20">
-          <div className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <Card
-                data-stat
-                className="relative overflow-hidden backdrop-blur-sm bg-card/50 border-border/50"
-              >
-                <CardContent className="pt-6">
-                  <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-br from-primary to-accent bg-clip-text text-transparent">
-                    99.9%
-                  </div>
-                  <div className="text-muted-foreground">Accuracy Rate</div>
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl" />
-                </CardContent>
-              </Card>
-
-              <Card
-                data-stat
-                className="relative overflow-hidden backdrop-blur-sm bg-card/50 border-border/50"
-              >
-                <CardContent className="pt-6">
-                  <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-br from-accent to-primary bg-clip-text text-transparent">
-                    15hrs
-                  </div>
-                  <div className="text-muted-foreground">Saved Weekly</div>
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full blur-3xl" />
-                </CardContent>
-              </Card>
-
-              <Card
-                data-stat
-                className="relative overflow-hidden backdrop-blur-sm bg-card/50 border-border/50"
-              >
-                <CardContent className="pt-6">
-                  <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-br from-primary to-accent bg-clip-text text-transparent">
-                    10k+
-                  </div>
-                  <div className="text-muted-foreground">Active Users</div>
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl" />
-                </CardContent>
-              </Card>
-            </div>
+          <div className="absolute flex flex-col font-['Capriola',sans-serif] h-[59px] justify-center leading-[0] left-0 text-[20px] text-white top-[352.5px] translate-y-[-50%] w-[395px]" data-node-id="17:109">
+            <p className="leading-[1.3] m-0">Etiam eleifend orci elit, eget iaculis ligula consectetur et.</p>
           </div>
-        </section>
-
-        {/* Features Section */}
-        <section id="features" ref={featuresRef} className="container mx-auto px-4 lg:px-8 py-20">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <Badge variant="secondary" className="mb-4 backdrop-blur-sm bg-secondary/50 border-border/50">
-                Features
-              </Badge>
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                Intelligent Automation
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Advanced AI that understands your business and works 24/7
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <Card
-                data-feature
-                className="relative group overflow-hidden backdrop-blur-sm bg-card/50 border-border/50 hover:border-primary/50 transition-all duration-300"
-              >
-                <CardHeader>
-                  <div className="relative w-12 h-12 mb-4">
-                    <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full group-hover:scale-150 transition-transform duration-500" />
-                    <div className="relative w-12 h-12 bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl flex items-center justify-center border border-primary/20">
-                      <Brain className="w-6 h-6 text-primary" />
-                    </div>
-                  </div>
-                  <CardTitle className="text-xl">Smart Categorization</CardTitle>
-                  <CardDescription>
-                    AI learns your patterns and automatically categorizes
-                    transactions with incredible accuracy
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-
-              <Card
-                data-feature
-                className="relative group overflow-hidden backdrop-blur-sm bg-card/50 border-border/50 hover:border-primary/50 transition-all duration-300"
-              >
-                <CardHeader>
-                  <div className="relative w-12 h-12 mb-4">
-                    <div className="absolute inset-0 bg-accent/20 blur-xl rounded-full group-hover:scale-150 transition-transform duration-500" />
-                    <div className="relative w-12 h-12 bg-gradient-to-br from-accent/20 to-primary/20 rounded-xl flex items-center justify-center border border-accent/20">
-                      <FileText className="w-6 h-6 text-accent" />
-                    </div>
-                  </div>
-                  <CardTitle className="text-xl">Receipt Processing</CardTitle>
-                  <CardDescription>
-                    Snap photos of receipts and watch AI extract every detail
-                    instantly and accurately
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-
-              <Card
-                data-feature
-                className="relative group overflow-hidden backdrop-blur-sm bg-card/50 border-border/50 hover:border-primary/50 transition-all duration-300"
-              >
-                <CardHeader>
-                  <div className="relative w-12 h-12 mb-4">
-                    <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full group-hover:scale-150 transition-transform duration-500" />
-                    <div className="relative w-12 h-12 bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl flex items-center justify-center border border-primary/20">
-                      <BarChart3 className="w-6 h-6 text-primary" />
-                    </div>
-                  </div>
-                  <CardTitle className="text-xl">Real-time Insights</CardTitle>
-                  <CardDescription>
-                    Get instant financial dashboards and predictive analytics at
-                    your fingertips
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-
-              <Card
-                data-feature
-                className="relative group overflow-hidden backdrop-blur-sm bg-card/50 border-border/50 hover:border-primary/50 transition-all duration-300"
-              >
-                <CardHeader>
-                  <div className="relative w-12 h-12 mb-4">
-                    <div className="absolute inset-0 bg-accent/20 blur-xl rounded-full group-hover:scale-150 transition-transform duration-500" />
-                    <div className="relative w-12 h-12 bg-gradient-to-br from-accent/20 to-primary/20 rounded-xl flex items-center justify-center border border-accent/20">
-                      <Shield className="w-6 h-6 text-accent" />
-                    </div>
-                  </div>
-                  <CardTitle className="text-xl">Tax Compliance</CardTitle>
-                  <CardDescription>
-                    Always tax-ready with automated compliance checks and
-                    organized records
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-
-              <Card
-                data-feature
-                className="relative group overflow-hidden backdrop-blur-sm bg-card/50 border-border/50 hover:border-primary/50 transition-all duration-300"
-              >
-                <CardHeader>
-                  <div className="relative w-12 h-12 mb-4">
-                    <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full group-hover:scale-150 transition-transform duration-500" />
-                    <div className="relative w-12 h-12 bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl flex items-center justify-center border border-primary/20">
-                      <Clock className="w-6 h-6 text-primary" />
-                    </div>
-                  </div>
-                  <CardTitle className="text-xl">Time Automation</CardTitle>
-                  <CardDescription>
-                    Save 15+ hours weekly on bookkeeping with intelligent
-                    automation workflows
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-
-              <Card
-                data-feature
-                className="relative group overflow-hidden backdrop-blur-sm bg-card/50 border-border/50 hover:border-primary/50 transition-all duration-300"
-              >
-                <CardHeader>
-                  <div className="relative w-12 h-12 mb-4">
-                    <div className="absolute inset-0 bg-accent/20 blur-xl rounded-full group-hover:scale-150 transition-transform duration-500" />
-                    <div className="relative w-12 h-12 bg-gradient-to-br from-accent/20 to-primary/20 rounded-xl flex items-center justify-center border border-accent/20">
-                      <Target className="w-6 h-6 text-accent" />
-                    </div>
-                  </div>
-                  <CardTitle className="text-xl">Predictive Analytics</CardTitle>
-                  <CardDescription>
-                    Make informed decisions with AI-powered forecasting and trend
-                    analysis
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            </div>
+          <div className="absolute flex flex-col font-['Capriola',sans-serif] h-[27px] justify-center leading-[0] left-0 text-[16px] text-white top-[418.5px] translate-y-[-50%] w-[395px]" data-node-id="17:114">
+            <p className="leading-[1.3] m-0">Blogs</p>
           </div>
-        </section>
+        </div>
+        <div className="absolute h-[432px] left-[522px] top-[198px] w-[395px]" data-name="News Middle" data-node-id="17:121">
+          <div className="absolute h-[300px] left-0 rounded-[20px] top-0 w-[395px]" data-node-id="17:104" style={{ backgroundImage: "linear-gradient(201.633deg, rgba(190, 110, 70, 0.4) 2.1899%, rgba(114, 134, 160, 0.4) 43.706%, rgba(205, 231, 176, 0.4) 64.144%), linear-gradient(179.215deg, rgba(190, 110, 70, 0.4) 2.9289%, rgba(114, 134, 160, 0.4) 65.62%, rgba(205, 231, 176, 0.4) 98.556%), linear-gradient(rgb(205, 231, 176) 0%, rgb(163, 191, 168) 75.962%, rgb(89, 89, 74) 100%)" }} />
+          <div className="absolute flex flex-col font-['Capriola',sans-serif] h-[27px] justify-center leading-[0] left-0 text-[16px] text-white top-[418.5px] translate-y-[-50%] w-[395px]" data-node-id="17:116">
+            <p className="leading-[1.3] m-0">Case Studies</p>
+          </div>
+          <div className="absolute flex flex-col font-['Capriola',sans-serif] h-[59px] justify-center leading-[0] left-0 text-[20px] text-white top-[354.5px] translate-y-[-50%] w-[395px]" data-node-id="17:110">
+            <p className="leading-[1.3] m-0">Aenean porta velit eu enim dapibus, id gravida metus auctor.</p>
+          </div>
+        </div>
+        <div className="absolute h-[432px] left-[948px] top-[198px] w-[395px]" data-name="News Right" data-node-id="17:122">
+          <div className="absolute h-[300px] left-0 rounded-[20px] top-0 w-[395px]" data-node-id="17:106" style={{ backgroundImage: "url('data:image/svg+xml;utf8,<svg viewBox=\\'0 0 395 300\\' xmlns=\\'http://www.w3.org/2000/svg\\' preserveAspectRatio=\\'none\\'><rect x=\\'0\\' y=\\'0\\' height=\\'100%\\' width=\\'100%\\' fill=\\'url(%23grad)\\' opacity=\\'0.30000001192092896\\'/><defs><radialGradient id=\\'grad\\' gradientUnits=\\'userSpaceOnUse\\' cx=\\'0\\' cy=\\'0\\' r=\\'10\\' gradientTransform=\\'matrix(1.6 34.95 -46.018 2.1067 197.5 150)\\'><stop stop-color=\\'rgba(239,98,108,1)\\' offset=\\'0\\'/><stop stop-color=\\'rgba(241,135,145,0.75)\\' offset=\\'0.25\\'/><stop stop-color=\\'rgba(244,173,182,0.5)\\' offset=\\'0.5\\'/><stop stop-color=\\'rgba(248,247,255,0)\\' offset=\\'1\\'/></radialGradient></defs></svg>'), linear-gradient(180.824deg, rgba(248, 247, 255, 0) 1.6598%, rgba(206, 109, 160, 0.6) 43.585%, rgba(147, 129, 255, 0) 99.12%), linear-gradient(118.252deg, rgba(248, 247, 255, 0.4) 1.4492%, rgba(255, 238, 221, 0.4) 48.423%, rgba(255, 216, 190, 0.4) 91.351%), linear-gradient(160.705deg, rgb(248, 247, 255) 6.3484%, rgb(184, 184, 255) 42.353%, rgb(147, 129, 255) 75.118%)" }} />
+          <div className="absolute flex flex-col font-['Capriola',sans-serif] h-[27px] justify-center leading-[0] left-0 text-[16px] text-white top-[418.5px] translate-y-[-50%] w-[395px]" data-node-id="17:118">
+            <p className="leading-[1.3] m-0">Research</p>
+          </div>
+          <div className="absolute flex flex-col font-['Capriola',sans-serif] h-[59px] justify-center leading-[0] left-0 text-[20px] text-white top-[352.5px] translate-y-[-50%] w-[395px]" data-node-id="17:112">
+            <p className="leading-[1.3] m-0">Nulla a ex diam. Donec quis orci sed purus porttitor blandit</p>
+          </div>
+        </div>
+        <div className="absolute left-[1280px] size-[50px] top-[323px]" data-name="More Button" data-node-id="17:128">
+          <img alt="" className="block max-w-none size-full" src={imgMoreButton} />
+        </div>
+      </div>
 
-        {/* Benefits Section */}
-        <section id="benefits" className="container mx-auto px-4 lg:px-8 py-20">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-16 items-center">
-              <div className="space-y-8">
-                <div>
-                  <Badge variant="secondary" className="mb-4 backdrop-blur-sm bg-secondary/50 border-border/50">
-                    Benefits
-                  </Badge>
-                  <h2 className="text-4xl font-bold mb-4">
-                    Why Choose AI Bookkeeping?
-                  </h2>
-                  <p className="text-lg text-muted-foreground">
-                    Transform your financial operations with cutting-edge AI
-                    technology
-                  </p>
-                </div>
-
-                <div className="space-y-6">
-                  {[
-                    {
-                      icon: TrendingUp,
-                      title: "Reduce Costs by 80%",
-                      description:
-                        "Save thousands on traditional bookkeeping while getting better results",
-                    },
-                    {
-                      icon: CheckCircle2,
-                      title: "99.9% Accuracy",
-                      description:
-                        "Eliminate human errors with AI-powered verification and validation",
-                    },
-                    {
-                      icon: Sparkles,
-                      title: "Actionable Insights",
-                      description:
-                        "Get predictive analytics and recommendations to optimize cash flow",
-                    },
-                    {
-                      icon: Shield,
-                      title: "Bank-Level Security",
-                      description:
-                        "Enterprise-grade encryption and compliance with SOC 2 standards",
-                    },
-                  ].map((benefit) => (
-                    <div key={benefit.title} className="flex gap-4 group">
-                      <div className="relative flex-shrink-0">
-                        <div className="absolute inset-0 bg-primary/20 blur-lg rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-                        <div className="relative w-12 h-12 bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl flex items-center justify-center border border-primary/20">
-                          <benefit.icon className="w-6 h-6 text-primary" />
-                        </div>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-lg mb-1">
-                          {benefit.title}
-                        </h3>
-                        <p className="text-muted-foreground">
-                          {benefit.description}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+      {/* Pre-End Section */}
+      <div className="absolute h-[813px] left-0 top-[6448px] w-full max-w-[1441px]" data-name="Pre-End Section" data-node-id="15:111">
+        <div className="absolute bg-[#0a0903] h-[813px] left-0 top-0 w-[1440px]" data-node-id="11:127" />
+        <div className="absolute h-[485px] left-[97px] rounded-[20px] top-[164px] w-[1247px]" data-name="Get Started Container" data-node-id="11:3360">
+          <div className="absolute h-[485px] left-0 rounded-[20px] top-0 w-[1247px]" data-name="Background" data-node-id="33:43">
+            <div aria-hidden="true" className="absolute inset-0 pointer-events-none rounded-[20px]">
+              <div className="absolute inset-0 overflow-hidden rounded-[20px]">
+                <img alt="" className="absolute h-[186.39%] left-[-0.01%] max-w-none top-[-49.07%] w-[128.4%]" src={imgBackground} />
               </div>
-
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-3xl blur-3xl" />
-                <Card className="relative backdrop-blur-sm bg-card/50 border-border/50 overflow-hidden">
-                  <CardContent className="p-8 space-y-6">
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20">
-                        <div>
-                          <div className="text-sm text-muted-foreground mb-1">
-                            Monthly Revenue
-                          </div>
-                          <div className="text-3xl font-bold">$127,450</div>
-                        </div>
-                        <TrendingUp className="w-8 h-8 text-primary" />
-                      </div>
-
-                      <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-accent/10 to-primary/10 border border-accent/20">
-                        <div>
-                          <div className="text-sm text-muted-foreground mb-1">
-                            Time Saved
-                          </div>
-                          <div className="text-3xl font-bold">15 hrs/wk</div>
-                        </div>
-                        <Clock className="w-8 h-8 text-accent" />
-                      </div>
-
-                      <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20">
-                        <div>
-                          <div className="text-sm text-muted-foreground mb-1">
-                            Cost Savings
-                          </div>
-                          <div className="text-3xl font-bold">$24,000/yr</div>
-                        </div>
-                        <BarChart3 className="w-8 h-8 text-primary" />
-                      </div>
-                    </div>
-
-                    <div className="pt-4 border-t border-border/50">
-                      <div className="text-sm text-muted-foreground mb-2">
-                        Trusted by 10,000+ businesses
-                      </div>
-                      <div className="flex gap-2">
-                        {[1, 2, 3, 4, 5].map((i) => (
-                          <div
-                            key={i}
-                            className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/20"
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
+              <div className="absolute bg-[rgba(0,0,0,0.1)] inset-0 rounded-[20px]" />
             </div>
           </div>
-        </section>
-
-        {/* CTA Section */}
-        <section id="pricing" className="container mx-auto px-4 lg:px-8 py-20">
-          <div className="max-w-4xl mx-auto">
-            <Card className="relative overflow-hidden backdrop-blur-sm bg-gradient-to-br from-primary/10 via-accent/10 to-primary/10 border-primary/20">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 animate-gradient" />
-              <CardContent className="relative p-12 md:p-16 text-center space-y-8">
-                <div>
-                  <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                    Ready to Transform Your Bookkeeping?
-                  </h2>
-                  <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                    Join thousands of businesses saving time and money with
-                    AI-powered financial intelligence
-                  </p>
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button size="lg" className="group text-base px-8 h-12 relative overflow-hidden">
-                    <span className="relative z-10 flex items-center gap-2">
-                      Start Free Trial
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-accent to-primary opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </Button>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="text-base px-8 h-12 backdrop-blur-sm border-border/50 hover:bg-secondary/50"
-                  >
-                    Schedule Demo
-                  </Button>
-                </div>
-
-                <div className="grid grid-cols-3 gap-8 pt-8 border-t border-border/50">
-                  <div>
-                    <div className="text-3xl font-bold mb-1">10,000+</div>
-                    <div className="text-sm text-muted-foreground">
-                      Active Users
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold mb-1">$2M+</div>
-                    <div className="text-sm text-muted-foreground">
-                      Saved Annually
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold mb-1">4.9/5</div>
-                    <div className="text-sm text-muted-foreground">
-                      Customer Rating
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-
-        {/* Footer */}
-        <footer className="container mx-auto px-4 lg:px-8 py-12 border-t border-border/50 mt-20">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full" />
-                  <div className="relative w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center">
-                    <Bot className="w-5 h-5 text-primary-foreground" />
-                  </div>
-                </div>
-                <span className="text-lg font-bold">AI Bookkeeping</span>
-              </div>
-              <p className="text-sm text-muted-foreground mb-4">
-                Intelligent financial automation for modern businesses
-              </p>
-              <div className="flex gap-3">
-              </div>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-4">Product</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#features" className="hover:text-foreground transition-colors cursor-pointer">Features</a></li>
-                <li><a href="#pricing" className="hover:text-foreground transition-colors cursor-pointer">Pricing</a></li>
-                <li><a href="/security" className="hover:text-foreground transition-colors cursor-pointer">Security</a></li>
-                <li><a href="/integrations" className="hover:text-foreground transition-colors cursor-pointer">Integrations</a></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-4">Company</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="/about" className="hover:text-foreground transition-colors cursor-pointer">About</a></li>
-                <li><a href="/blog" className="hover:text-foreground transition-colors cursor-pointer">Blog</a></li>
-                <li><a href="/careers" className="hover:text-foreground transition-colors cursor-pointer">Careers</a></li>
-                <li><a href="/contact" className="hover:text-foreground transition-colors cursor-pointer">Contact</a></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-4">Legal</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="/privacy" className="hover:text-foreground transition-colors cursor-pointer">Privacy</a></li>
-                <li><a href="/terms" className="hover:text-foreground transition-colors cursor-pointer">Terms</a></li>
-                <li><a href="/cookie-policy" className="hover:text-foreground transition-colors cursor-pointer">Cookie Policy</a></li>
-              </ul>
+          <p className="absolute font-['Capriola',sans-serif] leading-[1.3] left-[250px] text-[60px] text-nowrap text-white top-[154px] whitespace-pre m-0" data-node-id="11:128">
+            Get Started with BeeBlast
+          </p>
+          <div className="absolute h-[50px] left-[534px] top-[266px] w-[180px]" data-name="Book Demo Button" data-node-id="17:149">
+            <div className="absolute bg-[#f4d06f] h-[50px] left-0 rounded-[30px] top-0 w-[180px]" data-node-id="11:134" />
+            <div className="absolute flex flex-col font-['Capriola',sans-serif] justify-center leading-[0] left-[35px] text-[20px] text-black text-nowrap top-[25px] translate-y-[-50%]" data-node-id="11:135">
+              <p className="leading-[1.3] whitespace-pre m-0">Book demo</p>
             </div>
           </div>
+        </div>
+      </div>
 
-          <div className="pt-8 border-t border-border/50 text-center text-sm text-muted-foreground">
-            <p>&copy; 2025 AI Bookkeeping. All rights reserved.</p>
+      {/* End Section (Footer) */}
+      <div className="absolute h-[767px] left-0 top-[7261px] w-full max-w-[1442px]" data-name="End Section" data-node-id="15:109">
+        <div className="absolute bg-[#0a0903] h-[767px] left-0 top-0 w-[1440px]" data-node-id="3:9" />
+        <div className="absolute h-[767px] left-0 top-0 w-[1442px]" data-name="Language Container" data-node-id="15:99">
+          <p className="absolute font-['Inter',sans-serif] font-semibold leading-[1.3] left-[1056px] text-[#90959a] text-[20px] text-nowrap top-[102px] whitespace-pre m-0" data-node-id="11:108">
+            Language
+          </p>
+          <p className="absolute font-['Inter',sans-serif] font-semibold leading-[1.3] left-[1201px] text-[#f7f3f3] text-[20px] text-nowrap top-[102px] whitespace-pre m-0" data-node-id="11:110">
+            EN
+          </p>
+          <p className="absolute font-['Inter',sans-serif] font-semibold leading-[1.3] left-[1237px] text-[#90959a] text-[20px] text-nowrap top-[102px] whitespace-pre m-0" data-node-id="11:112">
+            NL
+          </p>
+          <div className="absolute left-[1024px] size-[10px] top-[110px]" data-node-id="15:113">
+            <img alt="" className="block max-w-none size-full" src={imgEllipse1} />
           </div>
-        </footer>
+        </div>
+        <div className="absolute h-[459px] left-[415px] top-[221px] w-[289px]" data-name="Footer Middle Container" data-node-id="15:96">
+          <div className="absolute bg-[#0a0903] h-[459px] left-px top-0 w-[288px]" data-node-id="3:25" />
+          <div className="absolute font-['Inter',sans-serif] font-semibold h-[142px] leading-[1.3] left-0 text-nowrap top-0 w-[136px] whitespace-pre" data-name="Resource Container" data-node-id="15:85">
+            <p className="absolute left-px text-[#90959a] text-[15px] top-0 m-0" data-node-id="3:31">
+              Resource
+            </p>
+            <p className="absolute left-px text-[#f7f3f3] text-[16px] top-[39px] m-0" data-node-id="6:65">
+              Blogs
+            </p>
+            <p className="absolute left-px text-[#f7f3f3] text-[16px] top-[80px] m-0" data-node-id="6:67">
+              Case Studies
+            </p>
+            <p className="absolute left-0 text-[#f7f3f3] text-[16px] top-[121px] m-0" data-node-id="6:71">
+              Customer Stories
+            </p>
+          </div>
+          <div className="absolute font-['Inter',sans-serif] font-semibold h-[101px] leading-[1.3] left-0 text-nowrap top-[203px] w-[169px] whitespace-pre" data-name="Platform Container" data-node-id="15:86">
+            <p className="absolute left-px text-[#90959a] text-[15px] top-0 m-0" data-node-id="6:83">
+              Platform
+            </p>
+            <p className="absolute left-px text-[#f7f3f3] text-[16px] top-[39px] m-0" data-node-id="6:85">
+              Accountant Assistant
+            </p>
+            <p className="absolute left-0 text-[#f7f3f3] text-[16px] top-[80px] m-0" data-node-id="6:87">
+              Workflow Agent
+            </p>
+          </div>
+        </div>
+        <div className="absolute h-[459px] left-[94px] top-[221px] w-[290px]" data-name="Footer Left Container" data-node-id="15:97">
+          <div className="absolute bg-[#0a0903] h-[459px] left-[2px] top-0 w-[288px]" data-node-id="3:23" />
+          <div className="absolute font-['Inter',sans-serif] font-semibold h-[142px] leading-[1.3] left-0 text-nowrap top-[162px] w-[159px] whitespace-pre" data-name="Research Container" data-node-id="15:83">
+            <p className="absolute left-[2px] text-[#90959a] text-[15px] top-0 m-0" data-node-id="6:73">
+              Researchs
+            </p>
+            <p className="absolute left-0 text-[#f7f3f3] text-[16px] top-[39px] m-0" data-node-id="6:75">
+              Research Index
+            </p>
+            <p className="absolute left-0 text-[#f7f3f3] text-[16px] top-[80px] m-0" data-node-id="6:77">
+              Research Overviews
+            </p>
+            <p className="absolute left-[2px] text-[#f7f3f3] text-[16px] top-[121px] m-0" data-node-id="6:79">
+              Research Residency
+            </p>
+          </div>
+          <div className="absolute font-['Inter',sans-serif] font-semibold h-[101px] leading-[1.3] left-[2px] text-nowrap top-0 w-[68px] whitespace-pre" data-name="Product Container" data-node-id="15:84">
+            <p className="absolute left-0 text-[#90959a] text-[15px] top-0 m-0" data-node-id="3:35">
+              Product
+            </p>
+            <p className="absolute left-0 text-[#f7f3f3] text-[16px] top-[39px] m-0" data-node-id="5:57">
+              Features
+            </p>
+            <p className="absolute left-px text-[#f7f3f3] text-[16px] top-[80px] m-0" data-node-id="5:59">
+              Security
+            </p>
+          </div>
+        </div>
+        <div className="absolute h-[459px] left-[736px] top-[221px] w-[288px]" data-name="Footer Right Container" data-node-id="15:98">
+          <div className="absolute bg-[#0a0903] h-[459px] left-0 top-0 w-[288px]" data-node-id="3:29" />
+          <div className="absolute font-['Inter',sans-serif] font-semibold h-[100px] leading-[1.3] left-0 top-[244px] w-[64px]" data-name="More Container" data-node-id="15:88">
+            <p className="absolute left-0 text-[#90959a] text-[15px] text-nowrap top-0 whitespace-pre m-0" data-node-id="3:37">
+              More
+            </p>
+            <p className="absolute h-[20px] left-0 text-[#f7f3f3] text-[16px] top-[39px] w-[44px] m-0" data-node-id="6:69">
+              News
+            </p>
+            <p className="absolute left-0 text-[#f7f3f3] text-[16px] text-nowrap top-[79px] whitespace-pre m-0" data-node-id="6:81">
+              Podcast
+            </p>
+          </div>
+          <div className="absolute font-['Inter',sans-serif] font-semibold h-[183px] leading-[1.3] left-0 text-nowrap top-0 w-[127px] whitespace-pre" data-name="Company Container" data-node-id="15:87">
+            <p className="absolute left-0 text-[#90959a] text-[15px] top-0 m-0" data-node-id="3:33">
+              Company
+            </p>
+            <p className="absolute left-0 text-[#f7f3f3] text-[16px] top-[39px] m-0" data-node-id="3:42">
+              About Us
+            </p>
+            <p className="absolute left-0 text-[#f7f3f3] text-[16px] top-[80px] m-0" data-node-id="3:46">
+              Careers
+            </p>
+            <p className="absolute left-0 text-[#f7f3f3] text-[16px] top-[121px] m-0" data-node-id="3:48">
+              Privacy Policies
+            </p>
+            <p className="absolute left-0 text-[#f7f3f3] text-[16px] top-[162px] m-0" data-node-id="3:50">
+              Cookies Policies
+            </p>
+          </div>
+        </div>
+        <div className="absolute h-[52px] left-[94px] top-[88px] w-[197px]" data-name="Icon Logo" data-node-id="15:100">
+          <div className="absolute bg-[#f4d06f] h-[50px] left-0 rounded-[30px] top-px w-[94px]" data-node-id="6:89" />
+          <p className="absolute font-['Capriola',sans-serif] leading-[1.3] left-[10px] text-[#0a0903] text-[40px] text-nowrap top-0 whitespace-pre m-0" data-node-id="6:90">
+            <span>Bee </span>
+            <span className="text-[#f7f3f3]">Blast</span>
+          </p>
+        </div>
+        <div className="absolute h-[361px] left-[1024px] top-[199px] w-[320px]" data-name="More contain Container" data-node-id="15:95">
+          <div className="absolute h-[361px] left-0 rounded-[20px] top-0 w-[320px]" data-node-id="15:89" style={{ backgroundImage: "linear-gradient(90deg, rgba(214, 239, 255, 0.2) 0%, rgba(214, 239, 255, 0.2) 100%), linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%), url('data:image/svg+xml;utf8,<svg viewBox=\\'0 0 320 361\\' xmlns=\\'http://www.w3.org/2000/svg\\' preserveAspectRatio=\\'none\\'><rect x=\\'0\\' y=\\'0\\' height=\\'100%\\' width=\\'100%\\' fill=\\'url(%23grad)\\' opacity=\\'0.20000000298023224\\'/><defs><radialGradient id=\\'grad\\' gradientUnits=\\'userSpaceOnUse\\' cx=\\'0\\' cy=\\'0\\' r=\\'10\\' gradientTransform=\\'matrix(9.7972e-16 18.05 -16 1.1052e-15 160 180.5)\\'><stop stop-color=\\'rgba(0,0,0,0)\\' offset=\\'0\\'/><stop stop-color=\\'rgba(0,0,0,1)\\' offset=\\'1\\'/></radialGradient></defs></svg>'), linear-gradient(rgb(251, 207, 112) 0%, rgb(16, 152, 247) 100%)" }} />
+          <p className="absolute font-['Capriola',sans-serif] h-[148px] leading-[1.3] left-[33px] text-[#f7f3f3] text-[30px] top-[18px] w-[266px] m-0" data-node-id="6:94">Lorem Ipsum is simply typesetting industry. </p>
+          <div className="absolute h-[50px] left-[33px] top-[282px] w-[180px]" data-name="Book Demo Button" data-node-id="17:145">
+            <div className="absolute bg-[#f4d06f] h-[50px] left-0 rounded-[30px] top-0 w-[180px]" data-node-id="17:146" />
+            <div className="absolute flex flex-col font-['Inter',sans-serif] font-semibold justify-center leading-[0] left-[27px] text-[20px] text-black text-nowrap top-[25px] translate-y-[-50%]" data-node-id="17:147">
+              <p className="leading-[1.3] whitespace-pre m-0">Give it a try</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Navigation */}
+      <div className="fixed bg-transparent h-[91px] left-0 right-0 top-0 z-50 backdrop-blur-sm" data-name="Navigation" data-node-id="1:15">
+        <div className="absolute h-[35px] left-[659px] top-[28px] w-[125px]" data-name="Resources Button" data-node-id="15:106">
+          <div className="absolute bg-[#d9d9d9] h-[35px] left-0 opacity-0 rounded-[20px] top-0 w-[125px] hover:opacity-50 transition-opacity cursor-pointer" data-node-id="1:44" />
+          <p className="absolute font-['Capriola',sans-serif] leading-[1.3] left-[10px] text-[20px] text-black text-nowrap top-[4px] whitespace-pre m-0 cursor-pointer" data-node-id="1:16">
+            Resources
+          </p>
+        </div>
+        <div className="absolute h-[35px] left-[812px] top-[28px] w-[90px]" data-name="About Button" data-node-id="15:107">
+          <div className="absolute bg-[#d9d9d9] h-[35px] left-0 opacity-0 rounded-[20px] top-0 w-[90px] hover:opacity-50 transition-opacity cursor-pointer" data-node-id="1:46" />
+          <p className="absolute font-['Capriola',sans-serif] leading-[1.3] left-[13px] text-[20px] text-black text-nowrap top-[4px] whitespace-pre m-0 cursor-pointer" data-node-id="1:17">
+            About
+          </p>
+        </div>
+        <div className="absolute h-[35px] left-[545px] top-[28px] w-[88px]" data-name="Home Button" data-node-id="15:105">
+          <div className="absolute bg-[#d9d9d9] h-[35px] left-0 opacity-50 rounded-[20px] top-0 w-[88px] hover:opacity-70 transition-opacity cursor-pointer" data-node-id="1:43" />
+          <p className="absolute font-['Capriola',sans-serif] leading-[1.3] left-[13px] text-[20px] text-black text-nowrap top-[4px] whitespace-pre m-0 cursor-pointer" data-node-id="1:41">
+            Home
+          </p>
+        </div>
+        <button className="absolute bg-[#0a0903] h-[50px] left-[calc(50%+568px)] rounded-[30px] top-[calc(50%+0.5px)] translate-x-[-50%] translate-y-[-50%] w-[112px] hover:bg-[#1a1903] transition-colors cursor-pointer" data-name="Sign In button" data-node-id="1:21">
+          <div className="absolute flex flex-col font-['Capriola',sans-serif] justify-center leading-[0] left-[calc(50%+0.5px)] text-[20px] text-center text-nowrap text-white top-1/2 translate-x-[-50%] translate-y-[-50%]" data-node-id="1:22">
+            <p className="leading-[1.3] whitespace-pre m-0">Sign In</p>
+          </div>
+        </button>
+        <div className="absolute h-[52px] left-[96px] top-[20px] w-[197px]" data-name="Icon Logo" data-node-id="15:101">
+          <div className="absolute bg-[#f4d06f] h-[50px] left-0 rounded-[30px] top-px w-[94px]" data-node-id="15:102" />
+          <p className="absolute font-['Capriola',sans-serif] leading-[1.3] left-[10px] text-[#0a0903] text-[40px] text-nowrap top-0 whitespace-pre m-0" data-node-id="15:103">
+            Bee Blast
+          </p>
+        </div>
+      </div>
+
+      {/* Bottom Footer */}
+      <div className="absolute h-[76px] left-0 top-[8028px] w-full max-w-[1440px]" data-name="Footer" data-node-id="15:110">
+        <div className="absolute bg-[#0a0903] h-[76px] left-0 top-0 w-full" data-node-id="2:7" />
+        <p className="absolute font-['Inter',sans-serif] font-semibold leading-[1.3] left-[575px] text-[#f7f3f3] text-[18px] text-nowrap top-[26px] whitespace-pre m-0" data-node-id="3:11">
+          <span>Beeblast@2025 </span>
+          <span className="[text-decoration-skip-ink:none] [text-underline-position:from-font] decoration-solid underline cursor-pointer hover:text-[#f4d06f] transition-colors">Manage Cookies</span>
+        </p>
+        <p className="absolute font-['Inter',sans-serif] font-semibold leading-[1.3] left-[1136px] text-[#f7f3f3] text-[18px] text-nowrap top-[26px] whitespace-pre m-0" data-node-id="3:12">
+          Amsterdam, Netherland
+        </p>
       </div>
     </div>
   );
 }
-
-export default App;
