@@ -37,7 +37,6 @@ export function Features() {
         end: `+=${scrollDistance}`, // Dynamic scroll distance based on feature count
         scrub: 1,
         pin: true,
-        markers: true,
         anticipatePin: 1,
       },
     });
@@ -104,7 +103,7 @@ export function Features() {
                 ref={(el) => {
                   featureRefs.current[index] = el;
                 }}
-                className="absolute inset-0 flex flex-col justify-center gap-6 px-6 py-8 sm:px-10 sm:py-12 bg-[#050404]/80 backdrop-blur-lg"
+                className="absolute inset-0 flex flex-col justify-center gap-6 px-6 py-8 sm:px-10 sm:py-12 bg-[#0a0903] backdrop-blur-lg"
               >
                 <p className="text-[2.25rem] sm:text-[2.5rem] leading-[1.25] m-0 text-[#f7f3f3]">
                   {feature.title}
