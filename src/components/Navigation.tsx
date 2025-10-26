@@ -85,7 +85,7 @@ export function Navigation() {
         <NavigationMenuList className="gap-4">
           <NavigationMenuItem>
             <NavigationMenuLink
-              href="#home"
+              href="/"
               className="h-[35px] min-w-[88px] px-4 rounded-[20px] transition-colors text-[20px] text-[#0a0903] items-center justify-center bg-transparent hover:bg-[#d9d9d9]/70"
               data-name="Home Button"
               data-node-id="15:105"
@@ -95,7 +95,7 @@ export function Navigation() {
           </NavigationMenuItem>
           <NavigationMenuItem>
             <NavigationMenuLink
-              href="#resources"
+              href="/resources"
               className="h-[35px] min-w-[125px] px-4 rounded-[20px] transition-colors text-[20px] text-[#0a0903] items-center justify-center bg-transparent hover:bg-[#d9d9d9]/70"
               data-name="Resources Button"
               data-node-id="15:106"
@@ -105,7 +105,7 @@ export function Navigation() {
           </NavigationMenuItem>
           <NavigationMenuItem>
             <NavigationMenuLink
-              href="#about"
+              href="/about"
               className="h-[35px] min-w-[90px] px-4 rounded-[20px] transition-colors text-[20px] text-[#0a0903] items-center justify-center bg-transparent hover:bg-[#d9d9d9]/70"
               data-name="About Button"
               data-node-id="15:107"

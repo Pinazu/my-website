@@ -32,26 +32,26 @@ export function Footer() {
             <p className="absolute left-px text-[#90959a] text-[15px] top-0 m-0" data-node-id="3:31">
               Resource
             </p>
-            <p className="absolute left-px text-[#f7f3f3] text-[16px] top-[39px] m-0" data-node-id="6:65">
+            <a href="/blogs" className="absolute left-px text-[#f7f3f3] text-[16px] top-[39px] m-0 cursor-pointer hover:text-[#f4d06f] transition-colors" data-node-id="6:65">
               Blogs
-            </p>
-            <p className="absolute left-px text-[#f7f3f3] text-[16px] top-[80px] m-0" data-node-id="6:67">
+            </a>
+            <a href="/case-studies" className="absolute left-px text-[#f7f3f3] text-[16px] top-[80px] m-0 cursor-pointer hover:text-[#f4d06f] transition-colors" data-node-id="6:67">
               Case Studies
-            </p>
-            <p className="absolute left-0 text-[#f7f3f3] text-[16px] top-[121px] m-0" data-node-id="6:71">
+            </a>
+            <a href="/customer-stories" className="absolute left-0 text-[#f7f3f3] text-[16px] top-[121px] m-0 cursor-pointer hover:text-[#f4d06f] transition-colors" data-node-id="6:71">
               Customer Stories
-            </p>
+            </a>
           </div>
           <div className="absolute font-['Inter',sans-serif] font-semibold h-[101px] leading-[1.3] left-0 text-nowrap top-[203px] w-[169px] whitespace-pre" data-name="Platform Container" data-node-id="15:86">
             <p className="absolute left-px text-[#90959a] text-[15px] top-0 m-0" data-node-id="6:83">
               Platform
             </p>
-            <p className="absolute left-px text-[#f7f3f3] text-[16px] top-[39px] m-0" data-node-id="6:85">
+            <a href="/accountant-assistant" className="absolute left-px text-[#f7f3f3] text-[16px] top-[39px] m-0 cursor-pointer hover:text-[#f4d06f] transition-colors" data-node-id="6:85">
               Accountant Assistant
-            </p>
-            <p className="absolute left-0 text-[#f7f3f3] text-[16px] top-[80px] m-0" data-node-id="6:87">
+            </a>
+            <a href="/workflow-agent" className="absolute left-0 text-[#f7f3f3] text-[16px] top-[80px] m-0 cursor-pointer hover:text-[#f4d06f] transition-colors" data-node-id="6:87">
               Workflow Agent
-            </p>
+            </a>
           </div>
         </div>
         <div className="absolute h-[459px] left-[94px] top-[221px] w-[290px]" data-name="Footer Left Container" data-node-id="15:97">
@@ -60,26 +60,26 @@ export function Footer() {
             <p className="absolute left-[2px] text-[#90959a] text-[15px] top-0 m-0" data-node-id="6:73">
               Researchs
             </p>
-            <p className="absolute left-0 text-[#f7f3f3] text-[16px] top-[39px] m-0" data-node-id="6:75">
+            <a href="/research-index" className="absolute left-0 text-[#f7f3f3] text-[16px] top-[39px] m-0 cursor-pointer hover:text-[#f4d06f] transition-colors" data-node-id="6:75">
               Research Index
-            </p>
-            <p className="absolute left-0 text-[#f7f3f3] text-[16px] top-[80px] m-0" data-node-id="6:77">
+            </a>
+            <a href="/research-overviews" className="absolute left-0 text-[#f7f3f3] text-[16px] top-[80px] m-0 cursor-pointer hover:text-[#f4d06f] transition-colors" data-node-id="6:77">
               Research Overviews
-            </p>
-            <p className="absolute left-[2px] text-[#f7f3f3] text-[16px] top-[121px] m-0" data-node-id="6:79">
+            </a>
+            <a href="/research-residency" className="absolute left-[2px] text-[#f7f3f3] text-[16px] top-[121px] m-0 cursor-pointer hover:text-[#f4d06f] transition-colors" data-node-id="6:79">
               Research Residency
-            </p>
+            </a>
           </div>
           <div className="absolute font-['Inter',sans-serif] font-semibold h-[101px] leading-[1.3] left-[2px] text-nowrap top-0 w-[68px] whitespace-pre" data-name="Product Container" data-node-id="15:84">
             <p className="absolute left-0 text-[#90959a] text-[15px] top-0 m-0" data-node-id="3:35">
               Product
             </p>
-            <p className="absolute left-0 text-[#f7f3f3] text-[16px] top-[39px] m-0" data-node-id="5:57">
+            <a href="/features" className="absolute left-0 text-[#f7f3f3] text-[16px] top-[39px] m-0 cursor-pointer hover:text-[#f4d06f] transition-colors" data-node-id="5:57">
               Features
-            </p>
-            <p className="absolute left-px text-[#f7f3f3] text-[16px] top-[80px] m-0" data-node-id="5:59">
+            </a>
+            <a href="/security" className="absolute left-px text-[#f7f3f3] text-[16px] top-[80px] m-0 cursor-pointer hover:text-[#f4d06f] transition-colors" data-node-id="5:59">
               Security
-            </p>
+            </a>
           </div>
         </div>
         <div className="absolute h-[459px] left-[736px] top-[221px] w-[288px]" data-name="Footer Right Container" data-node-id="15:98">
@@ -88,29 +88,29 @@ export function Footer() {
             <p className="absolute left-0 text-[#90959a] text-[15px] text-nowrap top-0 whitespace-pre m-0" data-node-id="3:37">
               More
             </p>
-            <p className="absolute h-[20px] left-0 text-[#f7f3f3] text-[16px] top-[39px] w-[44px] m-0" data-node-id="6:69">
+            <a href="/news" className="absolute h-[20px] left-0 text-[#f7f3f3] text-[16px] top-[39px] w-[44px] m-0 cursor-pointer hover:text-[#f4d06f] transition-colors" data-node-id="6:69">
               News
-            </p>
-            <p className="absolute left-0 text-[#f7f3f3] text-[16px] text-nowrap top-[79px] whitespace-pre m-0" data-node-id="6:81">
+            </a>
+            <a href="/podcast" className="absolute left-0 text-[#f7f3f3] text-[16px] text-nowrap top-[79px] whitespace-pre m-0 cursor-pointer hover:text-[#f4d06f] transition-colors" data-node-id="6:81">
               Podcast
-            </p>
+            </a>
           </div>
           <div className="absolute font-['Inter',sans-serif] font-semibold h-[183px] leading-[1.3] left-0 text-nowrap top-0 w-[127px] whitespace-pre" data-name="Company Container" data-node-id="15:87">
             <p className="absolute left-0 text-[#90959a] text-[15px] top-0 m-0" data-node-id="3:33">
               Company
             </p>
-            <p className="absolute left-0 text-[#f7f3f3] text-[16px] top-[39px] m-0" data-node-id="3:42">
+            <a href="/about-us" className="absolute left-0 text-[#f7f3f3] text-[16px] top-[39px] m-0 cursor-pointer hover:text-[#f4d06f] transition-colors" data-node-id="3:42">
               About Us
-            </p>
-            <p className="absolute left-0 text-[#f7f3f3] text-[16px] top-[80px] m-0" data-node-id="3:46">
+            </a>
+            <a href="/careers" className="absolute left-0 text-[#f7f3f3] text-[16px] top-[80px] m-0 cursor-pointer hover:text-[#f4d06f] transition-colors" data-node-id="3:46">
               Careers
-            </p>
-            <p className="absolute left-0 text-[#f7f3f3] text-[16px] top-[121px] m-0" data-node-id="3:48">
+            </a>
+            <a href="/privacy-policies" className="absolute left-0 text-[#f7f3f3] text-[16px] top-[121px] m-0 cursor-pointer hover:text-[#f4d06f] transition-colors" data-node-id="3:48">
               Privacy Policies
-            </p>
-            <p className="absolute left-0 text-[#f7f3f3] text-[16px] top-[162px] m-0" data-node-id="3:50">
+            </a>
+            <a href="/cookies-policies" className="absolute left-0 text-[#f7f3f3] text-[16px] top-[162px] m-0 cursor-pointer hover:text-[#f4d06f] transition-colors" data-node-id="3:50">
               Cookies Policies
-            </p>
+            </a>
           </div>
         </div>
         <div className="absolute h-[100px] left-[94px] top-[64px] w-[100px]" data-name="Icon Logo" data-node-id="15:100">
