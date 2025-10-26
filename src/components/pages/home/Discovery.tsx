@@ -38,7 +38,7 @@ export function Discovery() {
     }
   };
 
-  // Check for scrollable area
+  // Initialize checkscroll
   useEffect(() => {
     checkScroll();
     const container = scrollContainerRef.current;
@@ -63,6 +63,50 @@ export function Discovery() {
       gsap.set(rightButtonRef.current, { opacity: 0 });
     }
   }, []); // Only run once on mount
+
+  // Animate buttons when scroll state changes
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    const isHovering = wrapper?.matches(':hover');
+
+    // Animate left button
+    if (leftButtonRef.current) {
+      if (canScrollLeft && isHovering) {
+        // Fade in when scrolling becomes available and hovering
+        gsap.to(leftButtonRef.current, {
+          opacity: 1,
+          duration: 0.3,
+          ease: "power2.out"
+        });
+      } else if (!canScrollLeft) {
+        // Fade out when can't scroll left
+        gsap.to(leftButtonRef.current, {
+          opacity: 0,
+          duration: 0.3,
+          ease: "power2.out"
+        });
+      }
+    }
+
+    // Animate right button
+    if (rightButtonRef.current) {
+      if (canScrollRight && isHovering) {
+        // Fade in when scrolling becomes available and hovering
+        gsap.to(rightButtonRef.current, {
+          opacity: 1,
+          duration: 0.3,
+          ease: "power2.out"
+        });
+      } else if (!canScrollRight) {
+        // Fade out when can't scroll right
+        gsap.to(rightButtonRef.current, {
+          opacity: 0,
+          duration: 0.3,
+          ease: "power2.out"
+        });
+      }
+    }
+  }, [canScrollLeft, canScrollRight]);
 
   // GSAP hover animations
   useEffect(() => {
@@ -137,28 +181,26 @@ export function Discovery() {
           <div className="absolute right-0 top-0 bottom-0 w-30 bg-gradient-to-l from-[#0a0903] to-transparent z-10 pointer-events-none" />
 
           {/* Navigation Buttons - Left */}
-          {canScrollLeft && (
-            <Button
-              ref={leftButtonRef}
-              onClick={scrollLeft}
-              className="absolute left-35 top-[35%] -translate-y-1/2 z-20 flex-shrink-0 size-[50px] rounded-full p-0 hover:scale-110 active:scale-95 transition-transform duration-200 rotate-180 bg-transparent border-none shadow-lg pointer-events-auto"
-              aria-label="Scroll left"
-            >
-              <img alt="" className="block size-full" src={imgMoreButton} />
-            </Button>
-          )}
+          <Button
+            ref={leftButtonRef}
+            onClick={scrollLeft}
+            className={`absolute left-35 top-[35%] -translate-y-1/2 z-20 flex-shrink-0 size-[50px] rounded-full p-0 hover:scale-110 active:scale-95 transition-transform duration-200 rotate-180 bg-transparent border-none shadow-lg ${canScrollLeft ? 'pointer-events-auto' : 'pointer-events-none'}`}
+            aria-label="Scroll left"
+            disabled={!canScrollLeft}
+          >
+            <img alt="" className="block size-full" src={imgMoreButton} />
+          </Button>
 
           {/* Navigation Buttons - Right */}
-          {canScrollRight && (
-            <Button
-              ref={rightButtonRef}
-              onClick={scrollRight}
-              className="absolute right-35 top-[35%] -translate-y-1/2 z-20 flex-shrink-0 size-[50px] rounded-full p-0 hover:scale-110 active:scale-95 transition-transform duration-200 bg-transparent border-none shadow-lg pointer-events-auto"
-              aria-label="Scroll right"
-            >
-              <img alt="" className="block size-full" src={imgMoreButton} />
-            </Button>
-          )}
+          <Button
+            ref={rightButtonRef}
+            onClick={scrollRight}
+            className={`absolute right-35 top-[35%] -translate-y-1/2 z-20 flex-shrink-0 size-[50px] rounded-full p-0 hover:scale-110 active:scale-95 transition-transform duration-200 bg-transparent border-none shadow-lg ${canScrollRight ? 'pointer-events-auto' : 'pointer-events-none'}`}
+            aria-label="Scroll right"
+            disabled={!canScrollRight}
+          >
+            <img alt="" className="block size-full" src={imgMoreButton} />
+          </Button>
 
           {/* Horizontal Scroll Container - Hidden Scrollbar */}
           <div ref={scrollContainerRef} className="overflow-x-auto overflow-y-hidden scrollbar-hide">

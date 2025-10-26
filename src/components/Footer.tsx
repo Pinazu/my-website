@@ -151,7 +151,7 @@ export function Footer() {
                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-[#f7f3f3] hover:text-[#f4d06f] transition-colors">
                   <SiInstagram size={20} />
                 </a>
-                <a href="https://github.com/Pinazu" target="_blank" rel="noopener noreferrer" className="text-[#f7f3f3] hover:text-[#f4d06f] transition-colors">
+                <a href="https://github.com/beeblastco" target="_blank" rel="noopener noreferrer" className="text-[#f7f3f3] hover:text-[#f4d06f] transition-colors">
                   <SiGithub size={20} />
                 </a>
               </div>

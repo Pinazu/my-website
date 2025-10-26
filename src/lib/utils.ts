@@ -70,3 +70,23 @@ export const cards = [
     flipped: false,
   },
 ];
+
+export const features = [
+  {
+    title: "Auto-classified. Verified. Filed.",
+    description:
+      "BeeBlast automatically scans your receipts, invoices, and bank transactions, then prepares compliant tax reports — all within minutes.",
+  },
+  {
+    title: "Built for freelancers and small business",
+    description: "",
+  },
+  {
+    title: "Quisque tincidunt elit ultricies quam",
+    description: "",
+  },
+  {
+    title: "Mauris dolor odio, rutrum",
+    description: "",
+  },
+];
