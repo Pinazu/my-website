@@ -94,6 +94,21 @@ export const features = [
   },
 ];
 
+export const experiences = [
+  {
+    title: "Aenean eget metus vitae tortor placera",
+    description: "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; In hac habitasse platea dictumst. Duis at iaculis diam",
+  },
+  {
+    title: "Integer at quam euismod",
+    description: "Praesent sit amet erat nec leo efficitur gravida. Nullam euismod, nisi vel consectetur interdum, nisl nisi aliquet nunc, quis gravida nunc nisl quis nunc.",
+  },
+  {
+    title: "Sed sit amet sapien",
+    description: "Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Proin eget tortor risus. Nulla porttitor accumsan tincidunt.",
+  },
+]
+
 export const words = [
   "taxes,",
   "belastingen,",
