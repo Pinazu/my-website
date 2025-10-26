@@ -90,3 +90,13 @@ export const features = [
     description: "",
   },
 ];
+
+export const words = [
+  "taxes,",
+  "belastingen,",
+  "bookkeeping,",
+  "accountants,",
+  "employee,",
+  "imposte,",
+  "impuestos,"
+];
