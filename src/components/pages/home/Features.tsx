@@ -14,43 +14,56 @@ export function Features() {
   const featureRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    // Set initial state for feature items (right column only)
-    gsap.set(featureRefs.current, {
-      opacity: 0,
-      y: 50,
-    });
-
-    // Create individual ScrollTrigger for each feature using array approach
-    featureRefs.current.forEach((feature) => {
+    // Set initial state for all feature items except the first
+    featureRefs.current.forEach((feature, index) => {
       if (feature) {
-        gsap.to(feature, {
-          opacity: 1,
-          y: 0,
-          scrollTrigger: {
-            trigger: feature,
-            start: "top center",
-            end: "bottom center",
-            scrub: 1,
-            markers: true,
-            snap: {
-              snapTo: 1, // Snap to start/end of each feature
-              duration: { min: 0.2, max: 0.5 },
-              delay: 0.1,
-              ease: "power1.inOut",
-            },
-          },
+        gsap.set(feature, {
+          opacity: index === 0 ? 1 : 0, // First feature starts visible
+          y: index === 0 ? 0 : 50,
         });
       }
     });
 
-    // Pin the entire section while features animate
-    ScrollTrigger.create({
-      trigger: sectionRef.current,
-      start: "top top",
-      end: "bottom bottom",
-      pin: true,
-      anticipatePin: 1,
-      markers: true,
+    const durationPerFeature = 2;
+    const totalFeatures = features.length;
+    const totalDuration = totalFeatures * durationPerFeature;
+    const scrollDistance = totalDuration * 750;
+
+    // Create master timeline that sequences all features
+    const masterTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top top",
+        end: `+=${scrollDistance}`, // Dynamic scroll distance based on feature count
+        scrub: 1,
+        pin: true,
+        markers: true,
+        anticipatePin: 1,
+      },
+    });
+
+    // Sequentially animate each feature through 2 stages
+    featureRefs.current.forEach((feature, index) => {
+      if (feature) {
+        // Skip fade-in animation for the first feature
+        if (index > 0) {
+          masterTl.to(feature, {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: "power2.out",
+          });
+        }
+        // Fade out animation for all but the last feature
+        if (index < totalFeatures - 1) {
+          masterTl.to(feature, {
+            opacity: 0,
+            y: -50,
+            duration: 1,
+            ease: "power2.in",
+          });
+        }
+      }
     });
 
     return () => {
@@ -82,28 +95,26 @@ export function Features() {
           </div>
         </div>
 
-        <div className="flex flex-col w-full max-w-full h-full max-h-full border-1 border-white gap-8">
-          {/* Feature Titles */}
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              ref={(el) => {
-                featureRefs.current[index] = el;
-              }}
-              className="w-full h-full border-1 border-cyan-200"
-            >
-              <div className="px-3">
-                <p className="text-[40px] leading-[1.3] m-0 text-[#f7f3f3]">
+        <div className="relative flex-1 w-full overflow-hidden">
+          {/* Stack cards in one visual position while the wrapper scales responsively */}
+          <div className="relative w-full min-h-[420px] sm:min-h-[520px] lg:min-h-[600px]">
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                ref={(el) => {
+                  featureRefs.current[index] = el;
+                }}
+                className="absolute inset-0 flex flex-col justify-center gap-6 px-6 py-8 sm:px-10 sm:py-12 bg-[#050404]/80 backdrop-blur-lg"
+              >
+                <p className="text-[2.25rem] sm:text-[2.5rem] leading-[1.25] m-0 text-[#f7f3f3]">
                   {feature.title}
                 </p>
-              </div>
-              <div className="px-3 py-6">
-                <p className="text-[20px] leading-[1.5] mt-4 text-[#f7f3f3]">
+                <p className="text-[1.125rem] sm:text-[1.25rem] leading-[1.5] text-[#f7f3f3]/90">
                   {feature.description}
                 </p>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
