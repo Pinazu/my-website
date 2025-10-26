@@ -1,45 +1,74 @@
 // src/App.tsx
+import * as React from "react";
 import imgBackground from "../public/assets/background.png";
 import imgVector1 from "../public/assets/vector1.svg";
 import imgMoreButton from "../public/assets/more-button.svg";
 import imgEllipse1 from "../public/assets/ellipse1.svg";
+import { Gradient } from "@/components/ui/gradient";
+import { Button } from "@/components/ui/button";
+import {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuLink,
+} from "@/components/ui/navigation-menu";
 
 export default function App() {
+  const [activeNav, setActiveNav] = React.useState("home");
+  const [hoveredNav, setHoveredNav] = React.useState<string | null>(null);
+
   return (
-    <div className="bg-white relative w-full min-h-screen overflow-x-hidden" data-name="Main page" data-node-id="1:13">
-      <div className="absolute bg-[#f7f3f3] border border-black border-solid h-[8104px] left-0 top-0 w-full max-w-[1440px]" data-node-id="1:14" />
+    <div className="bg-[#f7f3f3] relative w-full min-h-screen overflow-x-hidden" data-name="Main page" data-node-id="1:13">
 
       {/* Main Title */}
-      <div className="absolute h-[260px] left-[calc(8.333%+113px)] top-[268px] w-[1074px] max-w-[calc(100%-226px)]" data-name="Main Title" data-node-id="15:108">
-        <div className="absolute h-[813px] left-[-232px] top-[-177px] w-[1440px]" data-node-id="15:136" />
-        <div className="absolute h-[904px] left-[-233px] top-[-268px] w-[1441px]" data-name="Background" data-node-id="33:28">
+      <section className="relative w-full h-screen min-h-[600px] max-h-[1080px] flex items-center justify-center overflow-hidden" data-name="Main Title" data-node-id="15:108">
+        {/* Background Image */}
+        <div className="absolute inset-0 w-full h-full" data-name="Background" data-node-id="33:28">
           <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
             <div className="absolute inset-0 overflow-hidden">
-              <img alt="" className="absolute h-full left-[-0.01%] max-w-none top-0 w-[111.12%]" src={imgBackground} />
+              <img alt="" className="absolute inset-0 w-full h-full object-cover" src={imgBackground} />
             </div>
-            <div className="absolute inset-0" />
           </div>
         </div>
-        <div className="absolute font-['Capriola',sans-serif] h-[260px] leading-[1.3] left-0 text-[100px] text-black top-0 w-[1074px]" data-node-id="1:25">
-          <p className="mb-0">Your taxes, </p>
-          <p className="m-0">automated with AI</p>
-        </div>
-        <div className="absolute h-[36px] left-[258px] top-[112px] w-[301px]" data-node-id="1:104">
-          <div className="absolute inset-[-8.33%_-1%]">
-            <img alt="" className="block max-w-none size-full" src={imgVector1} />
+
+        {/* Content Container */}
+        <div className="relative z-10 w-full max-w-[1440px] px-[120px] py-8">
+          <div className="max-w-[1074px]">
+            {/* Main Heading */}
+            <h1 className="font-['Capriola',sans-serif] text-[clamp(3rem,8vw,6.25rem)] leading-[1.3] text-black mb-8" data-node-id="1:25">
+              <span className="block relative">
+                Your <span className="relative inline-block">
+                  taxes,
+                  {/* Underline decoration */}
+                  <span className="absolute left-0 -bottom-5 w-full h-[0.4em]" data-node-id="1:104">
+                    <img alt="" className="block w-full h-full object-contain" src={imgVector1} />
+                  </span>
+                </span>
+              </span>
+              <span className="block">automated with AI</span>
+            </h1>
+
+            {/* Button */}
+            <Button
+              className="bg-[#f4d06f] h-[50px] rounded-[30px] w-[172px] font-['Inter',sans-serif] font-semibold text-[20px] text-black hover:bg-[#f4d06f]/90"
+              data-node-id="17:151"
+            >
+              Book demo
+            </Button>
           </div>
         </div>
-        <div className="absolute bg-[#f4d06f] h-[50px] left-0 rounded-[30px] top-[288px] w-[172px]" data-node-id="17:151" />
-        <div className="absolute flex flex-col font-['Inter',sans-serif] font-semibold justify-center leading-[0] left-[31px] text-[20px] text-black text-nowrap top-[313px] translate-y-[-50%]" data-node-id="17:152">
-          <p className="leading-[1.3] whitespace-pre m-0">Book demo</p>
-        </div>
-      </div>
+      </section>
 
       {/* Features Section */}
-      <div className="absolute h-[1176px] left-0 top-[904px] w-full max-w-[1440px]" data-name="Features Section" data-node-id="15:138">
+      <section className="relative h-[1176px] w-full max-w-[1440px]" data-name="Features Section" data-node-id="15:138">
         <div className="absolute bg-[#0a0903] h-[1176px] left-0 top-0 w-full" data-name="Background" data-node-id="15:134" />
         <div className="absolute bg-[#f7f7f3] h-[592px] left-[97px] rounded-[20px] top-[162px] w-[826px]" data-node-id="33:45" />
-        <div className="absolute h-[592px] left-[67px] rounded-[20px] top-[133px] w-[826px]" data-name="Background Preview" data-node-id="33:30" style={{ backgroundImage: "url('data:image/svg+xml;utf8,<svg viewBox=\\'0 0 826 592\\' xmlns=\\'http://www.w3.org/2000/svg\\' preserveAspectRatio=\\'none\\'><g transform=\\'matrix(32.145 50.198 -73.057 51.835 413.5 296.53)\\' opacity=\\'0.4000000059604645\\'><rect height=\\'75.637\\' width=\\'153.29\\' fill=\\'url(%23grad)\\' id=\\'quad\\' shape-rendering=\\'crispEdges\\'/><use href=\\'%23quad\\' transform=\\'scale(1 -1)\\'/><use href=\\'%23quad\\' transform=\\'scale(-1 1)\\'/><use href=\\'%23quad\\' transform=\\'scale(-1 -1)\\'/></g><defs><linearGradient id=\\'grad\\' gradientUnits=\\'userSpaceOnUse\\' x2=\\'5\\' y2=\\'5\\'><stop stop-color=\\'rgba(0,145,173,1)\\' offset=\\'0\\'/><stop stop-color=\\'rgba(16,151,176,1)\\' offset=\\'0.0625\\'/><stop stop-color=\\'rgba(32,157,180,1)\\' offset=\\'0.125\\'/><stop stop-color=\\'rgba(64,170,187,1)\\' offset=\\'0.25\\'/><stop stop-color=\\'rgba(96,182,194,1)\\' offset=\\'0.375\\'/><stop stop-color=\\'rgba(128,195,201,1)\\' offset=\\'0.5\\'/><stop stop-color=\\'rgba(191,219,214,1)\\' offset=\\'0.75\\'/><stop stop-color=\\'rgba(255,244,228,1)\\' offset=\\'1\\'/></linearGradient></defs></svg>')" }} />
+        <Gradient
+          gradient="url('data:image/svg+xml;utf8,<svg viewBox=&quot;0 0 826 592&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; preserveAspectRatio=&quot;none&quot;><g transform=&quot;matrix(32.145 50.198 -73.057 51.835 413.5 296.53)&quot; opacity=&quot;0.4000000059604645&quot;><rect height=&quot;75.637&quot; width=&quot;153.29&quot; fill=&quot;url(%23grad)&quot; id=&quot;quad&quot; shape-rendering=&quot;crispEdges&quot;/><use href=&quot;%23quad&quot; transform=&quot;scale(1 -1)&quot;/><use href=&quot;%23quad&quot; transform=&quot;scale(-1 1)&quot;/><use href=&quot;%23quad&quot; transform=&quot;scale(-1 -1)&quot;/></g><defs><linearGradient id=&quot;grad&quot; gradientUnits=&quot;userSpaceOnUse&quot; x2=&quot;5&quot; y2=&quot;5&quot;><stop stop-color=&quot;rgba(0,145,173,1)&quot; offset=&quot;0&quot;/><stop stop-color=&quot;rgba(16,151,176,1)&quot; offset=&quot;0.0625&quot;/><stop stop-color=&quot;rgba(32,157,180,1)&quot; offset=&quot;0.125&quot;/><stop stop-color=&quot;rgba(64,170,187,1)&quot; offset=&quot;0.25&quot;/><stop stop-color=&quot;rgba(96,182,194,1)&quot; offset=&quot;0.375&quot;/><stop stop-color=&quot;rgba(128,195,201,1)&quot; offset=&quot;0.5&quot;/><stop stop-color=&quot;rgba(191,219,214,1)&quot; offset=&quot;0.75&quot;/><stop stop-color=&quot;rgba(255,244,228,1)&quot; offset=&quot;1&quot;/></linearGradient></defs></svg>')"
+          className="absolute h-[592px] left-[67px] rounded-[20px] top-[133px] w-[826px]"
+          data-name="Background Preview"
+          data-node-id="33:30"
+        />
         <p className="absolute font-['Capriola',sans-serif] h-[106px] leading-[1.3] left-[97px] text-[#f7f3f3] text-[40px] top-[783px] w-[821px] m-0" data-node-id="15:120">
           Introducing BeeBlast — your effortless tax assistant.
         </p>
@@ -59,10 +88,10 @@ export default function App() {
         <p className="absolute font-['Capriola',sans-serif] h-[116px] leading-[1.3] left-[948px] text-[#1e1f21] text-[40px] top-[927px] w-[395px] m-0" data-node-id="15:153">
           Mauris dolor odio, rutrum
         </p>
-      </div>
+      </section>
 
       {/* Success Metric Section */}
-      <div className="absolute h-[879px] left-0 top-[2080px] w-full max-w-[1440px]" data-name="Success Metric Section" data-node-id="17:33">
+      <section className="relative h-[879px] w-full max-w-[1440px]" data-name="Success Metric Section" data-node-id="17:33">
         <div className="absolute bg-[#0a0903] h-[879px] left-0 top-0 w-full" data-name="Background" data-node-id="17:32" />
         <div className="absolute h-[121px] left-[96px] rounded-[20px] top-[502px] w-[394px]" data-name="First Feature" data-node-id="17:53">
           <div className="absolute bg-[#211e0a] h-[121px] left-0 rounded-[20px] top-0 w-[394px]" data-name="Background" data-node-id="17:38" />
@@ -100,10 +129,10 @@ export default function App() {
             <span className="text-[#0a0903]"> business.</span>
           </p>
         </div>
-      </div>
+      </section>
 
       {/* Security Section */}
-      <div className="absolute h-[879px] left-0 top-[2959px] w-full max-w-[1440px]" data-name="Security Section" data-node-id="17:162">
+      <section className="relative h-[879px] w-full max-w-[1440px]" data-name="Security Section" data-node-id="17:162">
         <div className="absolute bg-[#0a0903] h-[879px] left-0 top-0 w-full" data-node-id="17:157" />
         <p className="absolute font-['Capriola',sans-serif] h-[107px] leading-[1.3] left-[203px] text-[40px] text-white top-[75px] w-[394px] m-0" data-node-id="17:158">
           We priority your security and data.
@@ -147,11 +176,16 @@ export default function App() {
           <div className="absolute bg-[#211e0a] h-[74.161px] left-[265px] top-[298px] w-[67.5px]" data-node-id="33:65" />
           <div className="absolute bg-[#d6efff] h-[74.161px] left-[400px] top-[446.32px] w-[67.5px]" data-node-id="33:66" />
         </div>
-      </div>
+      </section>
 
       {/* Experience Section */}
-      <div className="absolute h-[1800px] left-0 top-[3838px] w-full max-w-[1440px]" data-name="Experience Section" data-node-id="17:61">
-        <div className="absolute h-[900px] left-0 top-0 w-full" data-name="Up Background" data-node-id="17:60" style={{ backgroundImage: "linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%), url('data:image/svg+xml;utf8,<svg viewBox=\\'0 0 1440 900\\' xmlns=\\'http://www.w3.org/2000/svg\\' preserveAspectRatio=\\'none\\'><g transform=\\'matrix(40.6 57.35 -91.76 64.96 720 450)\\' opacity=\\'0.30000001192092896\\'><rect height=\\'101.62\\' width=\\'211.8\\' fill=\\'url(%23grad)\\' id=\\'quad\\' shape-rendering=\\'crispEdges\\'/><use href=\\'%23quad\\' transform=\\'scale(1 -1)\\'/><use href=\\'%23quad\\' transform=\\'scale(-1 1)\\'/><use href=\\'%23quad\\' transform=\\'scale(-1 -1)\\'/></g><defs><linearGradient id=\\'grad\\' gradientUnits=\\'userSpaceOnUse\\' x2=\\'5\\' y2=\\'5\\'><stop stop-color=\\'rgba(0,145,173,1)\\' offset=\\'0\\'/><stop stop-color=\\'rgba(16,151,176,1)\\' offset=\\'0.0625\\'/><stop stop-color=\\'rgba(32,157,180,1)\\' offset=\\'0.125\\'/><stop stop-color=\\'rgba(64,170,187,1)\\' offset=\\'0.25\\'/><stop stop-color=\\'rgba(96,182,194,1)\\' offset=\\'0.375\\'/><stop stop-color=\\'rgba(128,195,201,1)\\' offset=\\'0.5\\'/><stop stop-color=\\'rgba(191,219,214,1)\\' offset=\\'0.75\\'/><stop stop-color=\\'rgba(255,244,228,1)\\' offset=\\'1\\'/></linearGradient></defs></svg>'), linear-gradient(121.991deg, rgb(5, 115, 241) 0%, rgb(251, 207, 112) 99.992%)" }} />
+      <section className="relative h-[1800px] w-full max-w-[1440px]" data-name="Experience Section" data-node-id="17:61">
+        <Gradient
+          gradient="linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%), url('data:image/svg+xml;utf8,<svg viewBox=&quot;0 0 1440 900&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; preserveAspectRatio=&quot;none&quot;><g transform=&quot;matrix(40.6 57.35 -91.76 64.96 720 450)&quot; opacity=&quot;0.30000001192092896&quot;><rect height=&quot;101.62&quot; width=&quot;211.8&quot; fill=&quot;url(%23grad)&quot; id=&quot;quad&quot; shape-rendering=&quot;crispEdges&quot;/><use href=&quot;%23quad&quot; transform=&quot;scale(1 -1)&quot;/><use href=&quot;%23quad&quot; transform=&quot;scale(-1 1)&quot;/><use href=&quot;%23quad&quot; transform=&quot;scale(-1 -1)&quot;/></g><defs><linearGradient id=&quot;grad&quot; gradientUnits=&quot;userSpaceOnUse&quot; x2=&quot;5&quot; y2=&quot;5&quot;><stop stop-color=&quot;rgba(0,145,173,1)&quot; offset=&quot;0&quot;/><stop stop-color=&quot;rgba(16,151,176,1)&quot; offset=&quot;0.0625&quot;/><stop stop-color=&quot;rgba(32,157,180,1)&quot; offset=&quot;0.125&quot;/><stop stop-color=&quot;rgba(64,170,187,1)&quot; offset=&quot;0.25&quot;/><stop stop-color=&quot;rgba(96,182,194,1)&quot; offset=&quot;0.375&quot;/><stop stop-color=&quot;rgba(128,195,201,1)&quot; offset=&quot;0.5&quot;/><stop stop-color=&quot;rgba(191,219,214,1)&quot; offset=&quot;0.75&quot;/><stop stop-color=&quot;rgba(255,244,228,1)&quot; offset=&quot;1&quot;/></linearGradient></defs></svg>'), linear-gradient(121.991deg, rgb(5, 115, 241) 0%, rgb(251, 207, 112) 99.992%)"
+          className="absolute h-[900px] left-0 top-0 w-full"
+          data-name="Up Background"
+          data-node-id="17:60"
+        />
         <div className="absolute flex flex-col font-['Capriola',sans-serif] h-[98px] justify-center leading-[1.3] left-[202px] text-[#f7f3f3] text-[40px] top-[135px] translate-y-[-50%] w-[821px]" data-node-id="17:59">
           <p className="mb-0">But, </p>
           <p className="m-0">we also care about your experiences</p>
@@ -159,9 +193,19 @@ export default function App() {
         <div className="absolute flex flex-col font-['Capriola',sans-serif] h-[139px] justify-center leading-[0] left-[737px] text-[#f7f3f3] text-[40px] top-[380.5px] translate-y-[-50%] w-[607px]" data-node-id="17:68">
           <p className="leading-[1.3] m-0">We want to bring seemless interaction between BeeBlast and your business</p>
         </div>
-        <div className="absolute h-[900px] left-0 top-[900px] w-full" data-name="Down Background" data-node-id="17:71" style={{ backgroundImage: "linear-gradient(229.418deg, rgba(251, 207, 112, 0.2) 4.1696%, rgba(0, 0, 0, 0) 23.028%), linear-gradient(194.896deg, rgba(0, 145, 173, 0.2) 73.4%, rgba(234, 255, 0, 0.2) 81.87%), linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%), url('data:image/svg+xml;utf8,<svg viewBox=\\'0 0 1440 900\\' xmlns=\\'http://www.w3.org/2000/svg\\' preserveAspectRatio=\\'none\\'><g transform=\\'matrix(-31.15 52.85 -84.56 -49.84 720 450)\\' opacity=\\'0.30000001192092896\\'><rect height=\\'164.3\\' width=\\'126.03\\' fill=\\'url(%23grad)\\' id=\\'quad\\' shape-rendering=\\'crispEdges\\'/><use href=\\'%23quad\\' transform=\\'scale(1 -1)\\'/><use href=\\'%23quad\\' transform=\\'scale(-1 1)\\'/><use href=\\'%23quad\\' transform=\\'scale(-1 -1)\\'/></g><defs><linearGradient id=\\'grad\\' gradientUnits=\\'userSpaceOnUse\\' x2=\\'5\\' y2=\\'5\\'><stop stop-color=\\'rgba(0,145,173,1)\\' offset=\\'0\\'/><stop stop-color=\\'rgba(16,151,176,1)\\' offset=\\'0.0625\\'/><stop stop-color=\\'rgba(32,157,180,1)\\' offset=\\'0.125\\'/><stop stop-color=\\'rgba(64,170,187,1)\\' offset=\\'0.25\\'/><stop stop-color=\\'rgba(96,182,194,1)\\' offset=\\'0.375\\'/><stop stop-color=\\'rgba(128,195,201,1)\\' offset=\\'0.5\\'/><stop stop-color=\\'rgba(191,219,214,1)\\' offset=\\'0.75\\'/><stop stop-color=\\'rgba(255,244,228,1)\\' offset=\\'1\\'/></linearGradient></defs></svg>'), linear-gradient(57.9946deg, rgb(5, 115, 241) 0%, rgb(251, 207, 112) 100%)" }} />
+        <Gradient
+          gradient="linear-gradient(229.418deg, rgba(251, 207, 112, 0.2) 4.1696%, rgba(0, 0, 0, 0) 23.028%), linear-gradient(194.896deg, rgba(0, 145, 173, 0.2) 73.4%, rgba(234, 255, 0, 0.2) 81.87%), linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%), url('data:image/svg+xml;utf8,<svg viewBox=&quot;0 0 1440 900&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; preserveAspectRatio=&quot;none&quot;><g transform=&quot;matrix(-31.15 52.85 -84.56 -49.84 720 450)&quot; opacity=&quot;0.30000001192092896&quot;><rect height=&quot;164.3&quot; width=&quot;126.03&quot; fill=&quot;url(%23grad)&quot; id=&quot;quad&quot; shape-rendering=&quot;crispEdges&quot;/><use href=&quot;%23quad&quot; transform=&quot;scale(1 -1)&quot;/><use href=&quot;%23quad&quot; transform=&quot;scale(-1 1)&quot;/><use href=&quot;%23quad&quot; transform=&quot;scale(-1 -1)&quot;/></g><defs><linearGradient id=&quot;grad&quot; gradientUnits=&quot;userSpaceOnUse&quot; x2=&quot;5&quot; y2=&quot;5&quot;><stop stop-color=&quot;rgba(0,145,173,1)&quot; offset=&quot;0&quot;/><stop stop-color=&quot;rgba(16,151,176,1)&quot; offset=&quot;0.0625&quot;/><stop stop-color=&quot;rgba(32,157,180,1)&quot; offset=&quot;0.125&quot;/><stop stop-color=&quot;rgba(64,170,187,1)&quot; offset=&quot;0.25&quot;/><stop stop-color=&quot;rgba(96,182,194,1)&quot; offset=&quot;0.375&quot;/><stop stop-color=&quot;rgba(128,195,201,1)&quot; offset=&quot;0.5&quot;/><stop stop-color=&quot;rgba(191,219,214,1)&quot; offset=&quot;0.75&quot;/><stop stop-color=&quot;rgba(255,244,228,1)&quot; offset=&quot;1&quot;/></linearGradient></defs></svg>'), linear-gradient(57.9946deg, rgb(5, 115, 241) 0%, rgb(251, 207, 112) 100%)"
+          className="absolute h-[900px] left-0 top-[900px] w-full"
+          data-name="Down Background"
+          data-node-id="17:71"
+        />
         <div className="absolute bg-[#f7f7f3] h-[592px] left-[518px] rounded-[20px] top-[604px] w-[826px]" data-node-id="17:75" />
-        <div className="absolute h-[585px] left-[551px] rounded-[20px] top-[577px] w-[828px]" data-name="Preview Feature" data-node-id="17:155" style={{ backgroundImage: "url('data:image/svg+xml;utf8,<svg viewBox=\\'0 0 828 585\\' xmlns=\\'http://www.w3.org/2000/svg\\' preserveAspectRatio=\\'none\\'><rect x=\\'0\\' y=\\'0\\' height=\\'100%\\' width=\\'100%\\' fill=\\'url(%23grad)\\' opacity=\\'0.30000001192092896\\'/><defs><radialGradient id=\\'grad\\' gradientUnits=\\'userSpaceOnUse\\' cx=\\'0\\' cy=\\'0\\' r=\\'10\\' gradientTransform=\\'matrix(2.535e-15 29.25 -41.4 1.791e-15 414 292.5)\\'><stop stop-color=\\'rgba(88,208,243,1)\\' offset=\\'0\\'/><stop stop-color=\\'rgba(127,208,210,1)\\' offset=\\'0.25\\'/><stop stop-color=\\'rgba(166,208,177,1)\\' offset=\\'0.5\\'/><stop stop-color=\\'rgba(205,208,144,1)\\' offset=\\'0.75\\'/><stop stop-color=\\'rgba(244,208,111,1)\\' offset=\\'1\\'/></radialGradient></defs></svg>')" }} />
+        <Gradient
+          gradient="url('data:image/svg+xml;utf8,<svg viewBox=&quot;0 0 828 585&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; preserveAspectRatio=&quot;none&quot;><rect x=&quot;0&quot; y=&quot;0&quot; height=&quot;100%&quot; width=&quot;100%&quot; fill=&quot;url(%23grad)&quot; opacity=&quot;0.30000001192092896&quot;/><defs><radialGradient id=&quot;grad&quot; gradientUnits=&quot;userSpaceOnUse&quot; cx=&quot;0&quot; cy=&quot;0&quot; r=&quot;10&quot; gradientTransform=&quot;matrix(2.535e-15 29.25 -41.4 1.791e-15 414 292.5)&quot;><stop stop-color=&quot;rgba(88,208,243,1)&quot; offset=&quot;0&quot;/><stop stop-color=&quot;rgba(127,208,210,1)&quot; offset=&quot;0.25&quot;/><stop stop-color=&quot;rgba(166,208,177,1)&quot; offset=&quot;0.5&quot;/><stop stop-color=&quot;rgba(205,208,144,1)&quot; offset=&quot;0.75&quot;/><stop stop-color=&quot;rgba(244,208,111,1)&quot; offset=&quot;1&quot;/></radialGradient></defs></svg>')"
+          className="absolute h-[585px] left-[551px] rounded-[20px] top-[577px] w-[828px]"
+          data-name="Preview Feature"
+          data-node-id="17:155"
+        />
         <div className="absolute h-[714px] left-[97px] top-[728px] w-[395px]" data-name="Features" data-node-id="17:84">
           <p className="absolute font-['Capriola',sans-serif] h-[121px] leading-[1.3] left-0 text-[40px] text-[rgba(247,243,243,0.6)] top-[304px] w-[395px] m-0" data-node-id="17:76">
             Integer at quam euismod
@@ -186,10 +230,10 @@ export default function App() {
           <p className="mb-0">BeeBlast is your employee, </p>
           <p className="m-0">you are fully in control</p>
         </div>
-      </div>
+      </section>
 
       {/* Discovery Section */}
-      <div className="absolute h-[810px] left-0 top-[5638px] w-full max-w-[1440px]" data-name="Discovery Section" data-node-id="17:100">
+      <section className="relative h-[810px] w-full max-w-[1440px]" data-name="Discovery Section" data-node-id="17:100">
         <div className="absolute bg-[#0a0903] h-[810px] left-0 top-0 w-full" data-name="Background" data-node-id="17:99" />
         <div className="absolute flex flex-col font-['Capriola',sans-serif] h-[29px] justify-center leading-[0] left-[96px] text-[#f7f3f3] text-[20px] top-[150.5px] translate-y-[-50%] w-[181px]" data-node-id="17:101">
           <p className="leading-[1.3] m-0">Discovery more</p>
@@ -197,7 +241,11 @@ export default function App() {
         <div className="absolute h-[432px] left-[96px] top-[198px] w-[395px]" data-name="News Left" data-node-id="17:120">
           <div className="absolute flex h-[300px] items-center justify-center left-px top-0 w-[395px]">
             <div className="flex-none scale-y-[-100%]">
-              <div className="h-[300px] rounded-[20px] w-[395px]" data-node-id="17:103" style={{ backgroundImage: "linear-gradient(209.358deg, rgba(0, 0, 0, 0) 58.372%, rgba(242, 230, 0, 0.2) 76.523%), linear-gradient(190.599deg, rgba(233, 236, 245, 0.3) 9.8843%, rgba(204, 214, 235, 0.3) 57.218%), linear-gradient(141.089deg, rgba(163, 195, 217, 0.3) 3.6358%, rgba(239, 11, 11, 0.3) 77.695%), url('data:image/svg+xml;utf8,<svg viewBox=\\'0 0 395 300\\' xmlns=\\'http://www.w3.org/2000/svg\\' preserveAspectRatio=\\'none\\'><g transform=\\'matrix(-3.9 6.25 -19.513 -12.176 198 121.5)\\' opacity=\\'0.4000000059604645\\'><rect height=\\'204.65\\' width=\\'345.72\\' fill=\\'url(%23grad)\\' id=\\'quad\\' shape-rendering=\\'crispEdges\\'/><use href=\\'%23quad\\' transform=\\'scale(1 -1)\\'/><use href=\\'%23quad\\' transform=\\'scale(-1 1)\\'/><use href=\\'%23quad\\' transform=\\'scale(-1 -1)\\'/></g><defs><linearGradient id=\\'grad\\' gradientUnits=\\'userSpaceOnUse\\' x2=\\'5\\' y2=\\'5\\'><stop stop-color=\\'rgba(163,195,217,1)\\' offset=\\'0\\'/><stop stop-color=\\'rgba(178,200,167,1)\\' offset=\\'0.25\\'/><stop stop-color=\\'rgba(194,204,116,1)\\' offset=\\'0.5\\'/><stop stop-color=\\'rgba(209,209,66,1)\\' offset=\\'0.75\\'/><stop stop-color=\\'rgba(217,212,41,1)\\' offset=\\'0.875\\'/><stop stop-color=\\'rgba(224,214,16,1)\\' offset=\\'1\\'/></linearGradient></defs></svg>'), url('data:image/svg+xml;utf8,<svg viewBox=\\'0 0 395 300\\' xmlns=\\'http://www.w3.org/2000/svg\\' preserveAspectRatio=\\'none\\'><g transform=\\'matrix(-7.85 3.5 -9.6608 -21.668 94 165.5)\\' opacity=\\'1\\'><rect height=\\'175.31\\' width=\\'417.6\\' fill=\\'url(%23grad)\\' id=\\'quad\\' shape-rendering=\\'crispEdges\\'/><use href=\\'%23quad\\' transform=\\'scale(1 -1)\\'/><use href=\\'%23quad\\' transform=\\'scale(-1 1)\\'/><use href=\\'%23quad\\' transform=\\'scale(-1 -1)\\'/></g><defs><linearGradient id=\\'grad\\' gradientUnits=\\'userSpaceOnUse\\' x2=\\'5\\' y2=\\'5\\'><stop stop-color=\\'rgba(233,236,245,1)\\' offset=\\'0\\'/><stop stop-color=\\'rgba(225,219,199,1)\\' offset=\\'0.25\\'/><stop stop-color=\\'rgba(216,201,152,1)\\' offset=\\'0.5\\'/><stop stop-color=\\'rgba(208,184,106,1)\\' offset=\\'0.75\\'/><stop stop-color=\\'rgba(199,167,59,1)\\' offset=\\'1\\'/></linearGradient></defs></svg>')" }} />
+              <Gradient
+                gradient="linear-gradient(209.358deg, rgba(0, 0, 0, 0) 58.372%, rgba(242, 230, 0, 0.2) 76.523%), linear-gradient(190.599deg, rgba(233, 236, 245, 0.3) 9.8843%, rgba(204, 214, 235, 0.3) 57.218%), linear-gradient(141.089deg, rgba(163, 195, 217, 0.3) 3.6358%, rgba(239, 11, 11, 0.3) 77.695%), url('data:image/svg+xml;utf8,<svg viewBox=&quot;0 0 395 300&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; preserveAspectRatio=&quot;none&quot;><g transform=&quot;matrix(-3.9 6.25 -19.513 -12.176 198 121.5)&quot; opacity=&quot;0.4000000059604645&quot;><rect height=&quot;204.65&quot; width=&quot;345.72&quot; fill=&quot;url(%23grad)&quot; id=&quot;quad&quot; shape-rendering=&quot;crispEdges&quot;/><use href=&quot;%23quad&quot; transform=&quot;scale(1 -1)&quot;/><use href=&quot;%23quad&quot; transform=&quot;scale(-1 1)&quot;/><use href=&quot;%23quad&quot; transform=&quot;scale(-1 -1)&quot;/></g><defs><linearGradient id=&quot;grad&quot; gradientUnits=&quot;userSpaceOnUse&quot; x2=&quot;5&quot; y2=&quot;5&quot;><stop stop-color=&quot;rgba(163,195,217,1)&quot; offset=&quot;0&quot;/><stop stop-color=&quot;rgba(178,200,167,1)&quot; offset=&quot;0.25&quot;/><stop stop-color=&quot;rgba(194,204,116,1)&quot; offset=&quot;0.5&quot;/><stop stop-color=&quot;rgba(209,209,66,1)&quot; offset=&quot;0.75&quot;/><stop stop-color=&quot;rgba(217,212,41,1)&quot; offset=&quot;0.875&quot;/><stop stop-color=&quot;rgba(224,214,16,1)&quot; offset=&quot;1&quot;/></linearGradient></defs></svg>'), url('data:image/svg+xml;utf8,<svg viewBox=&quot;0 0 395 300&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; preserveAspectRatio=&quot;none&quot;><g transform=&quot;matrix(-7.85 3.5 -9.6608 -21.668 94 165.5)&quot; opacity=&quot;1&quot;><rect height=&quot;175.31&quot; width=&quot;417.6&quot; fill=&quot;url(%23grad)&quot; id=&quot;quad&quot; shape-rendering=&quot;crispEdges&quot;/><use href=&quot;%23quad&quot; transform=&quot;scale(1 -1)&quot;/><use href=&quot;%23quad&quot; transform=&quot;scale(-1 1)&quot;/><use href=&quot;%23quad&quot; transform=&quot;scale(-1 -1)&quot;/></g><defs><linearGradient id=&quot;grad&quot; gradientUnits=&quot;userSpaceOnUse&quot; x2=&quot;5&quot; y2=&quot;5&quot;><stop stop-color=&quot;rgba(233,236,245,1)&quot; offset=&quot;0&quot;/><stop stop-color=&quot;rgba(225,219,199,1)&quot; offset=&quot;0.25&quot;/><stop stop-color=&quot;rgba(216,201,152,1)&quot; offset=&quot;0.5&quot;/><stop stop-color=&quot;rgba(208,184,106,1)&quot; offset=&quot;0.75&quot;/><stop stop-color=&quot;rgba(199,167,59,1)&quot; offset=&quot;1&quot;/></linearGradient></defs></svg>')"
+                className="h-[300px] rounded-[20px] w-[395px]"
+                data-node-id="17:103"
+              />
             </div>
           </div>
           <div className="absolute flex flex-col font-['Capriola',sans-serif] h-[59px] justify-center leading-[0] left-0 text-[20px] text-white top-[352.5px] translate-y-[-50%] w-[395px]" data-node-id="17:109">
@@ -208,7 +256,11 @@ export default function App() {
           </div>
         </div>
         <div className="absolute h-[432px] left-[522px] top-[198px] w-[395px]" data-name="News Middle" data-node-id="17:121">
-          <div className="absolute h-[300px] left-0 rounded-[20px] top-0 w-[395px]" data-node-id="17:104" style={{ backgroundImage: "linear-gradient(201.633deg, rgba(190, 110, 70, 0.4) 2.1899%, rgba(114, 134, 160, 0.4) 43.706%, rgba(205, 231, 176, 0.4) 64.144%), linear-gradient(179.215deg, rgba(190, 110, 70, 0.4) 2.9289%, rgba(114, 134, 160, 0.4) 65.62%, rgba(205, 231, 176, 0.4) 98.556%), linear-gradient(rgb(205, 231, 176) 0%, rgb(163, 191, 168) 75.962%, rgb(89, 89, 74) 100%)" }} />
+          <Gradient
+            gradient="linear-gradient(201.633deg, rgba(190, 110, 70, 0.4) 2.1899%, rgba(114, 134, 160, 0.4) 43.706%, rgba(205, 231, 176, 0.4) 64.144%), linear-gradient(179.215deg, rgba(190, 110, 70, 0.4) 2.9289%, rgba(114, 134, 160, 0.4) 65.62%, rgba(205, 231, 176, 0.4) 98.556%), linear-gradient(rgb(205, 231, 176) 0%, rgb(163, 191, 168) 75.962%, rgb(89, 89, 74) 100%)"
+            className="absolute h-[300px] left-0 rounded-[20px] top-0 w-[395px]"
+            data-node-id="17:104"
+          />
           <div className="absolute flex flex-col font-['Capriola',sans-serif] h-[27px] justify-center leading-[0] left-0 text-[16px] text-white top-[418.5px] translate-y-[-50%] w-[395px]" data-node-id="17:116">
             <p className="leading-[1.3] m-0">Case Studies</p>
           </div>
@@ -217,7 +269,11 @@ export default function App() {
           </div>
         </div>
         <div className="absolute h-[432px] left-[948px] top-[198px] w-[395px]" data-name="News Right" data-node-id="17:122">
-          <div className="absolute h-[300px] left-0 rounded-[20px] top-0 w-[395px]" data-node-id="17:106" style={{ backgroundImage: "url('data:image/svg+xml;utf8,<svg viewBox=\\'0 0 395 300\\' xmlns=\\'http://www.w3.org/2000/svg\\' preserveAspectRatio=\\'none\\'><rect x=\\'0\\' y=\\'0\\' height=\\'100%\\' width=\\'100%\\' fill=\\'url(%23grad)\\' opacity=\\'0.30000001192092896\\'/><defs><radialGradient id=\\'grad\\' gradientUnits=\\'userSpaceOnUse\\' cx=\\'0\\' cy=\\'0\\' r=\\'10\\' gradientTransform=\\'matrix(1.6 34.95 -46.018 2.1067 197.5 150)\\'><stop stop-color=\\'rgba(239,98,108,1)\\' offset=\\'0\\'/><stop stop-color=\\'rgba(241,135,145,0.75)\\' offset=\\'0.25\\'/><stop stop-color=\\'rgba(244,173,182,0.5)\\' offset=\\'0.5\\'/><stop stop-color=\\'rgba(248,247,255,0)\\' offset=\\'1\\'/></radialGradient></defs></svg>'), linear-gradient(180.824deg, rgba(248, 247, 255, 0) 1.6598%, rgba(206, 109, 160, 0.6) 43.585%, rgba(147, 129, 255, 0) 99.12%), linear-gradient(118.252deg, rgba(248, 247, 255, 0.4) 1.4492%, rgba(255, 238, 221, 0.4) 48.423%, rgba(255, 216, 190, 0.4) 91.351%), linear-gradient(160.705deg, rgb(248, 247, 255) 6.3484%, rgb(184, 184, 255) 42.353%, rgb(147, 129, 255) 75.118%)" }} />
+          <Gradient
+            gradient="url('data:image/svg+xml;utf8,<svg viewBox=&quot;0 0 395 300&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; preserveAspectRatio=&quot;none&quot;><rect x=&quot;0&quot; y=&quot;0&quot; height=&quot;100%&quot; width=&quot;100%&quot; fill=&quot;url(%23grad)&quot; opacity=&quot;0.30000001192092896&quot;/><defs><radialGradient id=&quot;grad&quot; gradientUnits=&quot;userSpaceOnUse&quot; cx=&quot;0&quot; cy=&quot;0&quot; r=&quot;10&quot; gradientTransform=&quot;matrix(1.6 34.95 -46.018 2.1067 197.5 150)&quot;><stop stop-color=&quot;rgba(239,98,108,1)&quot; offset=&quot;0&quot;/><stop stop-color=&quot;rgba(241,135,145,0.75)&quot; offset=&quot;0.25&quot;/><stop stop-color=&quot;rgba(244,173,182,0.5)&quot; offset=&quot;0.5&quot;/><stop stop-color=&quot;rgba(248,247,255,0)&quot; offset=&quot;1&quot;/></radialGradient></defs></svg>'), linear-gradient(180.824deg, rgba(248, 247, 255, 0) 1.6598%, rgba(206, 109, 160, 0.6) 43.585%, rgba(147, 129, 255, 0) 99.12%), linear-gradient(118.252deg, rgba(248, 247, 255, 0.4) 1.4492%, rgba(255, 238, 221, 0.4) 48.423%, rgba(255, 216, 190, 0.4) 91.351%), linear-gradient(160.705deg, rgb(248, 247, 255) 6.3484%, rgb(184, 184, 255) 42.353%, rgb(147, 129, 255) 75.118%)"
+            className="absolute h-[300px] left-0 rounded-[20px] top-0 w-[395px]"
+            data-node-id="17:106"
+          />
           <div className="absolute flex flex-col font-['Capriola',sans-serif] h-[27px] justify-center leading-[0] left-0 text-[16px] text-white top-[418.5px] translate-y-[-50%] w-[395px]" data-node-id="17:118">
             <p className="leading-[1.3] m-0">Research</p>
           </div>
@@ -228,10 +284,10 @@ export default function App() {
         <div className="absolute left-[1280px] size-[50px] top-[323px]" data-name="More Button" data-node-id="17:128">
           <img alt="" className="block max-w-none size-full" src={imgMoreButton} />
         </div>
-      </div>
+      </section>
 
       {/* Pre-End Section */}
-      <div className="absolute h-[813px] left-0 top-[6448px] w-full max-w-[1441px]" data-name="Pre-End Section" data-node-id="15:111">
+      <section className="relative h-[813px] w-full max-w-[1441px]" data-name="Pre-End Section" data-node-id="15:111">
         <div className="absolute bg-[#0a0903] h-[813px] left-0 top-0 w-[1440px]" data-node-id="11:127" />
         <div className="absolute h-[485px] left-[97px] rounded-[20px] top-[164px] w-[1247px]" data-name="Get Started Container" data-node-id="11:3360">
           <div className="absolute h-[485px] left-0 rounded-[20px] top-0 w-[1247px]" data-name="Background" data-node-id="33:43">
@@ -245,17 +301,18 @@ export default function App() {
           <p className="absolute font-['Capriola',sans-serif] leading-[1.3] left-[250px] text-[60px] text-nowrap text-white top-[154px] whitespace-pre m-0" data-node-id="11:128">
             Get Started with BeeBlast
           </p>
-          <div className="absolute h-[50px] left-[534px] top-[266px] w-[180px]" data-name="Book Demo Button" data-node-id="17:149">
-            <div className="absolute bg-[#f4d06f] h-[50px] left-0 rounded-[30px] top-0 w-[180px]" data-node-id="11:134" />
-            <div className="absolute flex flex-col font-['Capriola',sans-serif] justify-center leading-[0] left-[35px] text-[20px] text-black text-nowrap top-[25px] translate-y-[-50%]" data-node-id="11:135">
-              <p className="leading-[1.3] whitespace-pre m-0">Book demo</p>
-            </div>
-          </div>
+          <Button
+            className="absolute bg-[#f4d06f] h-[50px] left-[534px] top-[266px] w-[180px] rounded-[30px] font-['Capriola',sans-serif] text-[20px] text-black hover:bg-[#f4d06f]/90"
+            data-name="Book Demo Button"
+            data-node-id="17:149"
+          >
+            Book demo
+          </Button>
         </div>
-      </div>
+      </section>
 
       {/* End Section (Footer) */}
-      <div className="absolute h-[767px] left-0 top-[7261px] w-full max-w-[1442px]" data-name="End Section" data-node-id="15:109">
+      <section className="relative h-[767px] w-full max-w-[1442px]" data-name="End Section" data-node-id="15:109">
         <div className="absolute bg-[#0a0903] h-[767px] left-0 top-0 w-[1440px]" data-node-id="3:9" />
         <div className="absolute h-[767px] left-0 top-0 w-[1442px]" data-name="Language Container" data-node-id="15:99">
           <p className="absolute font-['Inter',sans-serif] font-semibold leading-[1.3] left-[1056px] text-[#90959a] text-[20px] text-nowrap top-[102px] whitespace-pre m-0" data-node-id="11:108">
@@ -366,52 +423,108 @@ export default function App() {
           </p>
         </div>
         <div className="absolute h-[361px] left-[1024px] top-[199px] w-[320px]" data-name="More contain Container" data-node-id="15:95">
-          <div className="absolute h-[361px] left-0 rounded-[20px] top-0 w-[320px]" data-node-id="15:89" style={{ backgroundImage: "linear-gradient(90deg, rgba(214, 239, 255, 0.2) 0%, rgba(214, 239, 255, 0.2) 100%), linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%), url('data:image/svg+xml;utf8,<svg viewBox=\\'0 0 320 361\\' xmlns=\\'http://www.w3.org/2000/svg\\' preserveAspectRatio=\\'none\\'><rect x=\\'0\\' y=\\'0\\' height=\\'100%\\' width=\\'100%\\' fill=\\'url(%23grad)\\' opacity=\\'0.20000000298023224\\'/><defs><radialGradient id=\\'grad\\' gradientUnits=\\'userSpaceOnUse\\' cx=\\'0\\' cy=\\'0\\' r=\\'10\\' gradientTransform=\\'matrix(9.7972e-16 18.05 -16 1.1052e-15 160 180.5)\\'><stop stop-color=\\'rgba(0,0,0,0)\\' offset=\\'0\\'/><stop stop-color=\\'rgba(0,0,0,1)\\' offset=\\'1\\'/></radialGradient></defs></svg>'), linear-gradient(rgb(251, 207, 112) 0%, rgb(16, 152, 247) 100%)" }} />
+          <Gradient
+            gradient="linear-gradient(90deg, rgba(214, 239, 255, 0.2) 0%, rgba(214, 239, 255, 0.2) 100%), linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%), url('data:image/svg+xml;utf8,<svg viewBox=&quot;0 0 320 361&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; preserveAspectRatio=&quot;none&quot;><rect x=&quot;0&quot; y=&quot;0&quot; height=&quot;100%&quot; width=&quot;100%&quot; fill=&quot;url(%23grad)&quot; opacity=&quot;0.20000000298023224&quot;/><defs><radialGradient id=&quot;grad&quot; gradientUnits=&quot;userSpaceOnUse&quot; cx=&quot;0&quot; cy=&quot;0&quot; r=&quot;10&quot; gradientTransform=&quot;matrix(9.7972e-16 18.05 -16 1.1052e-15 160 180.5)&quot;><stop stop-color=&quot;rgba(0,0,0,0)&quot; offset=&quot;0&quot;/><stop stop-color=&quot;rgba(0,0,0,1)&quot; offset=&quot;1&quot;/></radialGradient></defs></svg>'), linear-gradient(rgb(251, 207, 112) 0%, rgb(16, 152, 247) 100%)"
+            className="absolute h-[361px] left-0 rounded-[20px] top-0 w-[320px]"
+            data-node-id="15:89"
+          />
           <p className="absolute font-['Capriola',sans-serif] h-[148px] leading-[1.3] left-[33px] text-[#f7f3f3] text-[30px] top-[18px] w-[266px] m-0" data-node-id="6:94">Lorem Ipsum is simply typesetting industry. </p>
-          <div className="absolute h-[50px] left-[33px] top-[282px] w-[180px]" data-name="Book Demo Button" data-node-id="17:145">
-            <div className="absolute bg-[#f4d06f] h-[50px] left-0 rounded-[30px] top-0 w-[180px]" data-node-id="17:146" />
-            <div className="absolute flex flex-col font-['Inter',sans-serif] font-semibold justify-center leading-[0] left-[27px] text-[20px] text-black text-nowrap top-[25px] translate-y-[-50%]" data-node-id="17:147">
-              <p className="leading-[1.3] whitespace-pre m-0">Give it a try</p>
-            </div>
-          </div>
+          <Button
+            className="absolute bg-[#f4d06f] h-[50px] left-[33px] top-[282px] w-[180px] rounded-[30px] font-['Inter',sans-serif] font-semibold text-[20px] text-black hover:bg-[#f4d06f]/90"
+            data-name="Book Demo Button"
+            data-node-id="17:145"
+          >
+            Give it a try
+          </Button>
         </div>
-      </div>
+      </section>
 
       {/* Navigation */}
-      <div className="fixed bg-transparent h-[91px] left-0 right-0 top-0 z-50 backdrop-blur-sm" data-name="Navigation" data-node-id="1:15">
-        <div className="absolute h-[35px] left-[659px] top-[28px] w-[125px]" data-name="Resources Button" data-node-id="15:106">
-          <div className="absolute bg-[#d9d9d9] h-[35px] left-0 opacity-0 rounded-[20px] top-0 w-[125px] hover:opacity-50 transition-opacity cursor-pointer" data-node-id="1:44" />
-          <p className="absolute font-['Capriola',sans-serif] leading-[1.3] left-[10px] text-[20px] text-black text-nowrap top-[4px] whitespace-pre m-0 cursor-pointer" data-node-id="1:16">
-            Resources
-          </p>
-        </div>
-        <div className="absolute h-[35px] left-[812px] top-[28px] w-[90px]" data-name="About Button" data-node-id="15:107">
-          <div className="absolute bg-[#d9d9d9] h-[35px] left-0 opacity-0 rounded-[20px] top-0 w-[90px] hover:opacity-50 transition-opacity cursor-pointer" data-node-id="1:46" />
-          <p className="absolute font-['Capriola',sans-serif] leading-[1.3] left-[13px] text-[20px] text-black text-nowrap top-[4px] whitespace-pre m-0 cursor-pointer" data-node-id="1:17">
-            About
-          </p>
-        </div>
-        <div className="absolute h-[35px] left-[545px] top-[28px] w-[88px]" data-name="Home Button" data-node-id="15:105">
-          <div className="absolute bg-[#d9d9d9] h-[35px] left-0 opacity-50 rounded-[20px] top-0 w-[88px] hover:opacity-70 transition-opacity cursor-pointer" data-node-id="1:43" />
-          <p className="absolute font-['Capriola',sans-serif] leading-[1.3] left-[13px] text-[20px] text-black text-nowrap top-[4px] whitespace-pre m-0 cursor-pointer" data-node-id="1:41">
-            Home
-          </p>
-        </div>
-        <button className="absolute bg-[#0a0903] h-[50px] left-[calc(50%+568px)] rounded-[30px] top-[calc(50%+0.5px)] translate-x-[-50%] translate-y-[-50%] w-[112px] hover:bg-[#1a1903] transition-colors cursor-pointer" data-name="Sign In button" data-node-id="1:21">
-          <div className="absolute flex flex-col font-['Capriola',sans-serif] justify-center leading-[0] left-[calc(50%+0.5px)] text-[20px] text-center text-nowrap text-white top-1/2 translate-x-[-50%] translate-y-[-50%]" data-node-id="1:22">
-            <p className="leading-[1.3] whitespace-pre m-0">Sign In</p>
-          </div>
-        </button>
+      <section className="fixed bg-transparent h-[91px] left-0 right-0 top-0 z-50 backdrop-blur-sm" data-name="Navigation" data-node-id="1:15">
+        <NavigationMenu className="absolute left-[545px] top-[28px]" viewport={false}>
+          <NavigationMenuList className="gap-4">
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                href="#home"
+                onClick={() => setActiveNav("home")}
+                onMouseEnter={() => setHoveredNav("home")}
+                onMouseLeave={() => setHoveredNav(null)}
+                className={`h-[35px] min-w-[88px] px-4 rounded-[20px] transition-colors font-['Capriola',sans-serif] text-[20px] text-black items-center justify-center ${
+                  hoveredNav !== null
+                    ? hoveredNav === "home"
+                      ? "bg-[#d9d9d9]/70"
+                      : "bg-transparent"
+                    : activeNav === "home"
+                    ? "bg-[#d9d9d9]/70"
+                    : "bg-transparent"
+                }`}
+                data-name="Home Button"
+                data-node-id="15:105"
+              >
+                Home
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                href="#resources"
+                onClick={() => setActiveNav("resources")}
+                onMouseEnter={() => setHoveredNav("resources")}
+                onMouseLeave={() => setHoveredNav(null)}
+                className={`h-[35px] min-w-[125px] px-4 rounded-[20px] transition-colors font-['Capriola',sans-serif] text-[20px] text-black items-center justify-center ${
+                  hoveredNav !== null
+                    ? hoveredNav === "resources"
+                      ? "bg-[#d9d9d9]/70"
+                      : "bg-transparent"
+                    : activeNav === "resources"
+                    ? "bg-[#d9d9d9]/70"
+                    : "bg-transparent"
+                }`}
+                data-name="Resources Button"
+                data-node-id="15:106"
+              >
+                Resources
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                href="#about"
+                onClick={() => setActiveNav("about")}
+                onMouseEnter={() => setHoveredNav("about")}
+                onMouseLeave={() => setHoveredNav(null)}
+                className={`h-[35px] min-w-[90px] px-4 rounded-[20px] transition-colors font-['Capriola',sans-serif] text-[20px] text-black items-center justify-center ${
+                  hoveredNav !== null
+                    ? hoveredNav === "about"
+                      ? "bg-[#d9d9d9]/70"
+                      : "bg-transparent"
+                    : activeNav === "about"
+                    ? "bg-[#d9d9d9]/70"
+                    : "bg-transparent"
+                }`}
+                data-name="About Button"
+                data-node-id="15:107"
+              >
+                About
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+        <Button
+          className="absolute bg-[#0a0903] h-[50px] left-[calc(50%+568px)] rounded-[30px] top-[calc(50%+0.5px)] translate-x-[-50%] translate-y-[-50%] w-[112px] hover:bg-[#1a1903] font-['Capriola',sans-serif] text-[20px] text-white"
+          data-name="Sign In button"
+          data-node-id="1:21"
+        >
+          Sign In
+        </Button>
         <div className="absolute h-[52px] left-[96px] top-[20px] w-[197px]" data-name="Icon Logo" data-node-id="15:101">
           <div className="absolute bg-[#f4d06f] h-[50px] left-0 rounded-[30px] top-px w-[94px]" data-node-id="15:102" />
           <p className="absolute font-['Capriola',sans-serif] leading-[1.3] left-[10px] text-[#0a0903] text-[40px] text-nowrap top-0 whitespace-pre m-0" data-node-id="15:103">
             Bee Blast
           </p>
         </div>
-      </div>
+      </section>
 
       {/* Bottom Footer */}
-      <div className="absolute h-[76px] left-0 top-[8028px] w-full max-w-[1440px]" data-name="Footer" data-node-id="15:110">
+      <section className="relative h-[76px] w-full max-w-[1440px]" data-name="Footer" data-node-id="15:110">
         <div className="absolute bg-[#0a0903] h-[76px] left-0 top-0 w-full" data-node-id="2:7" />
         <p className="absolute font-['Inter',sans-serif] font-semibold leading-[1.3] left-[575px] text-[#f7f3f3] text-[18px] text-nowrap top-[26px] whitespace-pre m-0" data-node-id="3:11">
           <span>Beeblast@2025 </span>
@@ -420,7 +533,7 @@ export default function App() {
         <p className="absolute font-['Inter',sans-serif] font-semibold leading-[1.3] left-[1136px] text-[#f7f3f3] text-[18px] text-nowrap top-[26px] whitespace-pre m-0" data-node-id="3:12">
           Amsterdam, Netherland
         </p>
-      </div>
+      </section>
     </div>
   );
 }
