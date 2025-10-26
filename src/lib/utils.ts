@@ -79,15 +79,18 @@ export const features = [
   },
   {
     title: "Built for freelancers and small business",
-    description: "",
+    description:
+      "Tailored workflows keep solopreneurs organized with smart reminders, cash-flow snapshots, and one-click filings when you're ready.",
   },
   {
     title: "Quisque tincidunt elit ultricies quam",
-    description: "",
+    description:
+      "Real-time anomaly detection flags unusual spend patterns instantly so you can correct issues before they snowball.",
   },
   {
     title: "Mauris dolor odio, rutrum",
-    description: "",
+    description:
+      "Collaborate securely with accountants using shared workspaces, granular permissions, and immutable audit trails for every edit.",
   },
 ];
 
