@@ -1,5 +1,6 @@
 // src/components/Navigation.tsx
 import * as React from "react";
+import gsap from "gsap";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -12,7 +13,30 @@ export function Navigation() {
   const [isNavVisible, setIsNavVisible] = React.useState(true);
   const lastScrollY = React.useRef(0);
   const hideTimer = React.useRef<number | undefined>(undefined);
+  const navRef = React.useRef<HTMLElement>(null);
 
+  // GSAP animation effect when visibility changes
+  React.useEffect(() => {
+    if (!navRef.current) return;
+
+    if (isNavVisible) {
+      gsap.to(navRef.current, {
+        y: 0,
+        opacity: 1,
+        duration: 0.6,
+        ease: "power3.out",
+      });
+    } else {
+      gsap.to(navRef.current, {
+        y: -91,
+        opacity: 0,
+        duration: 0.4,
+        ease: "power2.in",
+      });
+    }
+  }, [isNavVisible]);
+
+  // Scroll and mouse interaction effects
   React.useEffect(() => {
     const showAndAutoHide = () => {
       setIsNavVisible(true);
@@ -52,8 +76,8 @@ export function Navigation() {
 
   return (
     <section
-      className={`fixed bg-transparent h-[91px] left-0 right-0 z-50 backdrop-blur-sm transition-transform duration-300 ease-in-out ${isNavVisible ? 'top-0' : '-top-[91px]'
-        }`}
+      ref={navRef}
+      className="fixed bg-transparent h-[91px] left-0 right-0 top-0 z-50 backdrop-blur-sm"
       data-name="Navigation"
       data-node-id="1:15"
     >
