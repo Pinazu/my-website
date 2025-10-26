@@ -20,22 +20,22 @@ export default function App() {
   return (
     <div className="bg-[#f7f3f3] relative w-full min-h-screen overflow-x-hidden" data-name="Main page" data-node-id="1:13">
 
-      {/* Main Title */}
-      <section className="relative w-full h-screen min-h-[600px] max-h-[1080px] flex items-center justify-center overflow-hidden" data-name="Main Title" data-node-id="15:108">
-        {/* Background Image */}
-        <div className="absolute inset-0 w-full h-full" data-name="Background" data-node-id="33:28">
-          <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
-            <div className="absolute inset-0 overflow-hidden">
-              <img alt="" className="absolute inset-0 w-full h-full object-cover" src={imgBackground} />
-            </div>
+      {/* Fixed Background Image */}
+      <div className="fixed inset-0 w-full h-screen min-h-[600px] max-h-[1080px] z-0" data-name="Fixed Background" data-node-id="33:28">
+        <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+          <div className="absolute inset-0 overflow-hidden">
+            <img alt="" className="absolute inset-0 w-full h-full object-cover" src={imgBackground} />
           </div>
         </div>
+      </div>
 
+      {/* Main Title Content */}
+      <section className="relative w-full h-screen min-h-[600px] max-h-[1080px] flex items-center justify-center overflow-hidden z-5" data-name="Main Title" data-node-id="15:108">
         {/* Content Container */}
         <div className="relative z-10 w-full max-w-[1440px] px-[120px] py-8">
           <div className="max-w-[1074px]">
             {/* Main Heading */}
-            <h1 className="font-['Capriola',sans-serif] text-[clamp(3rem,8vw,6.25rem)] leading-[1.3] text-black mb-8" data-node-id="1:25">
+            <h1 className="font-['Capriola',sans-serif] text-[clamp(3rem,8vw,6.25rem)] leading-[1.3] text-[#f7f3f3] mb-8" data-node-id="1:25">
               <span className="block relative">
                 Your <span className="relative inline-block">
                   taxes,
@@ -50,7 +50,7 @@ export default function App() {
 
             {/* Button */}
             <Button
-              className="bg-[#f4d06f] h-[50px] rounded-[30px] w-[172px] font-['Inter',sans-serif] font-semibold text-[20px] text-black hover:bg-[#f4d06f]/90"
+              className="bg-[#f4d06f] h-[50px] rounded-[30px] w-[172px] font-['Inter',sans-serif] font-semibold text-[20px] text-[#0A0903] hover:bg-[#f4d06f]/90"
               data-node-id="17:151"
             >
               Book demo
@@ -60,7 +60,7 @@ export default function App() {
       </section>
 
       {/* Features Section */}
-      <section className="relative h-[1176px] w-full max-w-[1440px]" data-name="Features Section" data-node-id="15:138">
+      <section className="relative h-[1176px] w-full max-w-[1440px] z-10" data-name="Features Section" data-node-id="15:138">
         <div className="absolute bg-[#0a0903] h-[1176px] left-0 top-0 w-full" data-name="Background" data-node-id="15:134" />
         <div className="absolute bg-[#f7f7f3] h-[592px] left-[97px] rounded-[20px] top-[162px] w-[826px]" data-node-id="33:45" />
         <Gradient
@@ -79,7 +79,7 @@ export default function App() {
           Quisque tincidunt elit ultricies quam
         </p>
         <div className="absolute h-[304px] left-[948px] top-[323px] w-[395px]" data-name="Feature Description" data-node-id="16:32">
-          <div className="absolute bg-[#0a0903] border border-black border-solid h-[279px] left-0 rounded-[20px] top-0 w-[395px]" data-node-id="15:142" />
+          <div className="absolute bg-[#0a0903] border border-[#0A0903] border-solid h-[279px] left-0 rounded-[20px] top-0 w-[395px]" data-node-id="15:142" />
           <p className="absolute font-['Capriola',sans-serif] leading-[1.3] left-0 text-[#f7f3f3] text-[40px] top-0 w-[395px] m-0" data-node-id="15:114">
             Auto-classified. Verified. Filed.
           </p>
@@ -91,7 +91,7 @@ export default function App() {
       </section>
 
       {/* Success Metric Section */}
-      <section className="relative h-[879px] w-full max-w-[1440px]" data-name="Success Metric Section" data-node-id="17:33">
+      <section className="relative h-[879px] w-full max-w-[1440px] z-10" data-name="Success Metric Section" data-node-id="17:33">
         <div className="absolute bg-[#0a0903] h-[879px] left-0 top-0 w-full" data-name="Background" data-node-id="17:32" />
         <div className="absolute h-[121px] left-[96px] rounded-[20px] top-[502px] w-[394px]" data-name="First Feature" data-node-id="17:53">
           <div className="absolute bg-[#211e0a] h-[121px] left-0 rounded-[20px] top-0 w-[394px]" data-name="Background" data-node-id="17:38" />
@@ -132,7 +132,7 @@ export default function App() {
       </section>
 
       {/* Security Section */}
-      <section className="relative h-[879px] w-full max-w-[1440px]" data-name="Security Section" data-node-id="17:162">
+      <section className="relative h-[879px] w-full max-w-[1440px] z-10" data-name="Security Section" data-node-id="17:162">
         <div className="absolute bg-[#0a0903] h-[879px] left-0 top-0 w-full" data-node-id="17:157" />
         <p className="absolute font-['Capriola',sans-serif] h-[107px] leading-[1.3] left-[203px] text-[40px] text-white top-[75px] w-[394px] m-0" data-node-id="17:158">
           We priority your security and data.
@@ -179,7 +179,7 @@ export default function App() {
       </section>
 
       {/* Experience Section */}
-      <section className="relative h-[1800px] w-full max-w-[1440px]" data-name="Experience Section" data-node-id="17:61">
+      <section className="relative h-[1800px] w-full max-w-[1440px] z-10" data-name="Experience Section" data-node-id="17:61">
         <Gradient
           gradient="linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%), url('data:image/svg+xml;utf8,<svg viewBox=&quot;0 0 1440 900&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; preserveAspectRatio=&quot;none&quot;><g transform=&quot;matrix(40.6 57.35 -91.76 64.96 720 450)&quot; opacity=&quot;0.30000001192092896&quot;><rect height=&quot;101.62&quot; width=&quot;211.8&quot; fill=&quot;url(%23grad)&quot; id=&quot;quad&quot; shape-rendering=&quot;crispEdges&quot;/><use href=&quot;%23quad&quot; transform=&quot;scale(1 -1)&quot;/><use href=&quot;%23quad&quot; transform=&quot;scale(-1 1)&quot;/><use href=&quot;%23quad&quot; transform=&quot;scale(-1 -1)&quot;/></g><defs><linearGradient id=&quot;grad&quot; gradientUnits=&quot;userSpaceOnUse&quot; x2=&quot;5&quot; y2=&quot;5&quot;><stop stop-color=&quot;rgba(0,145,173,1)&quot; offset=&quot;0&quot;/><stop stop-color=&quot;rgba(16,151,176,1)&quot; offset=&quot;0.0625&quot;/><stop stop-color=&quot;rgba(32,157,180,1)&quot; offset=&quot;0.125&quot;/><stop stop-color=&quot;rgba(64,170,187,1)&quot; offset=&quot;0.25&quot;/><stop stop-color=&quot;rgba(96,182,194,1)&quot; offset=&quot;0.375&quot;/><stop stop-color=&quot;rgba(128,195,201,1)&quot; offset=&quot;0.5&quot;/><stop stop-color=&quot;rgba(191,219,214,1)&quot; offset=&quot;0.75&quot;/><stop stop-color=&quot;rgba(255,244,228,1)&quot; offset=&quot;1&quot;/></linearGradient></defs></svg>'), linear-gradient(121.991deg, rgb(5, 115, 241) 0%, rgb(251, 207, 112) 99.992%)"
           className="absolute h-[900px] left-0 top-0 w-full"
@@ -233,7 +233,7 @@ export default function App() {
       </section>
 
       {/* Discovery Section */}
-      <section className="relative h-[810px] w-full max-w-[1440px]" data-name="Discovery Section" data-node-id="17:100">
+      <section className="relative h-[810px] w-full max-w-[1440px] z-10" data-name="Discovery Section" data-node-id="17:100">
         <div className="absolute bg-[#0a0903] h-[810px] left-0 top-0 w-full" data-name="Background" data-node-id="17:99" />
         <div className="absolute flex flex-col font-['Capriola',sans-serif] h-[29px] justify-center leading-[0] left-[96px] text-[#f7f3f3] text-[20px] top-[150.5px] translate-y-[-50%] w-[181px]" data-node-id="17:101">
           <p className="leading-[1.3] m-0">Discovery more</p>
@@ -287,22 +287,17 @@ export default function App() {
       </section>
 
       {/* Pre-End Section */}
-      <section className="relative h-[813px] w-full max-w-[1441px]" data-name="Pre-End Section" data-node-id="15:111">
-        <div className="absolute bg-[#0a0903] h-[813px] left-0 top-0 w-[1440px]" data-node-id="11:127" />
+      <section className="relative h-[813px] w-full max-w-[1441px] z-10" data-name="Pre-End Section" data-node-id="15:111">
+        <div className="absolute bg-transparent h-[813px] left-0 top-0 w-[1440px]" data-node-id="11:127" />
         <div className="absolute h-[485px] left-[97px] rounded-[20px] top-[164px] w-[1247px]" data-name="Get Started Container" data-node-id="11:3360">
-          <div className="absolute h-[485px] left-0 rounded-[20px] top-0 w-[1247px]" data-name="Background" data-node-id="33:43">
-            <div aria-hidden="true" className="absolute inset-0 pointer-events-none rounded-[20px]">
-              <div className="absolute inset-0 overflow-hidden rounded-[20px]">
-                <img alt="" className="absolute h-[186.39%] left-[-0.01%] max-w-none top-[-49.07%] w-[128.4%]" src={imgBackground} />
-              </div>
-              <div className="absolute bg-[rgba(0,0,0,0.1)] inset-0 rounded-[20px]" />
-            </div>
-          </div>
+          {/* Transparent background to show fixed background through */}
+          <div className="absolute h-[485px] left-0 rounded-[20px] top-0 w-[1247px] bg-transparent backdrop-blur-sm" data-name="Background" data-node-id="33:43" />
+
           <p className="absolute font-['Capriola',sans-serif] leading-[1.3] left-[250px] text-[60px] text-nowrap text-white top-[154px] whitespace-pre m-0" data-node-id="11:128">
             Get Started with BeeBlast
           </p>
           <Button
-            className="absolute bg-[#f4d06f] h-[50px] left-[534px] top-[266px] w-[180px] rounded-[30px] font-['Capriola',sans-serif] text-[20px] text-black hover:bg-[#f4d06f]/90"
+            className="absolute bg-[#f4d06f] h-[50px] left-[534px] top-[266px] w-[180px] rounded-[30px] font-['Capriola',sans-serif] text-[20px] text-[#0A0903] hover:bg-[#f4d06f]/90"
             data-name="Book Demo Button"
             data-node-id="17:149"
           >
@@ -312,7 +307,7 @@ export default function App() {
       </section>
 
       {/* End Section (Footer) */}
-      <section className="relative h-[767px] w-full max-w-[1442px]" data-name="End Section" data-node-id="15:109">
+      <section className="relative h-[767px] w-full max-w-[1442px] z-10" data-name="End Section" data-node-id="15:109">
         <div className="absolute bg-[#0a0903] h-[767px] left-0 top-0 w-[1440px]" data-node-id="3:9" />
         <div className="absolute h-[767px] left-0 top-0 w-[1442px]" data-name="Language Container" data-node-id="15:99">
           <p className="absolute font-['Inter',sans-serif] font-semibold leading-[1.3] left-[1056px] text-[#90959a] text-[20px] text-nowrap top-[102px] whitespace-pre m-0" data-node-id="11:108">
@@ -430,7 +425,7 @@ export default function App() {
           />
           <p className="absolute font-['Capriola',sans-serif] h-[148px] leading-[1.3] left-[33px] text-[#f7f3f3] text-[30px] top-[18px] w-[266px] m-0" data-node-id="6:94">Lorem Ipsum is simply typesetting industry. </p>
           <Button
-            className="absolute bg-[#f4d06f] h-[50px] left-[33px] top-[282px] w-[180px] rounded-[30px] font-['Inter',sans-serif] font-semibold text-[20px] text-black hover:bg-[#f4d06f]/90"
+            className="absolute bg-[#f4d06f] h-[50px] left-[33px] top-[282px] w-[180px] rounded-[30px] font-['Inter',sans-serif] font-semibold text-[20px] text-[#0A0903] hover:bg-[#f4d06f]/90"
             data-name="Book Demo Button"
             data-node-id="17:145"
           >
@@ -449,7 +444,7 @@ export default function App() {
                 onClick={() => setActiveNav("home")}
                 onMouseEnter={() => setHoveredNav("home")}
                 onMouseLeave={() => setHoveredNav(null)}
-                className={`h-[35px] min-w-[88px] px-4 rounded-[20px] transition-colors font-['Capriola',sans-serif] text-[20px] text-black items-center justify-center ${
+                className={`h-[35px] min-w-[88px] px-4 rounded-[20px] transition-colors font-['Capriola',sans-serif] text-[20px] text-[#0A0903] items-center justify-center ${
                   hoveredNav !== null
                     ? hoveredNav === "home"
                       ? "bg-[#d9d9d9]/70"
@@ -470,7 +465,7 @@ export default function App() {
                 onClick={() => setActiveNav("resources")}
                 onMouseEnter={() => setHoveredNav("resources")}
                 onMouseLeave={() => setHoveredNav(null)}
-                className={`h-[35px] min-w-[125px] px-4 rounded-[20px] transition-colors font-['Capriola',sans-serif] text-[20px] text-black items-center justify-center ${
+                className={`h-[35px] min-w-[125px] px-4 rounded-[20px] transition-colors font-['Capriola',sans-serif] text-[20px] text-[#0A0903] items-center justify-center ${
                   hoveredNav !== null
                     ? hoveredNav === "resources"
                       ? "bg-[#d9d9d9]/70"
@@ -491,7 +486,7 @@ export default function App() {
                 onClick={() => setActiveNav("about")}
                 onMouseEnter={() => setHoveredNav("about")}
                 onMouseLeave={() => setHoveredNav(null)}
-                className={`h-[35px] min-w-[90px] px-4 rounded-[20px] transition-colors font-['Capriola',sans-serif] text-[20px] text-black items-center justify-center ${
+                className={`h-[35px] min-w-[90px] px-4 rounded-[20px] transition-colors font-['Capriola',sans-serif] text-[20px] text-[#0A0903] items-center justify-center ${
                   hoveredNav !== null
                     ? hoveredNav === "about"
                       ? "bg-[#d9d9d9]/70"
@@ -524,7 +519,7 @@ export default function App() {
       </section>
 
       {/* Bottom Footer */}
-      <section className="relative h-[76px] w-full max-w-[1440px]" data-name="Footer" data-node-id="15:110">
+      <section className="relative h-[76px] w-full max-w-[1440px] z-10" data-name="Footer" data-node-id="15:110">
         <div className="absolute bg-[#0a0903] h-[76px] left-0 top-0 w-full" data-node-id="2:7" />
         <p className="absolute font-['Inter',sans-serif] font-semibold leading-[1.3] left-[575px] text-[#f7f3f3] text-[18px] text-nowrap top-[26px] whitespace-pre m-0" data-node-id="3:11">
           <span>Beeblast@2025 </span>
