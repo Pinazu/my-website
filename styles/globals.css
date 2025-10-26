@@ -1,2 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+
+@layer base {
+  body {
+    font-family: 'Capriola', sans-serif;
+  }
+}

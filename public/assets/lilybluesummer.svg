@@ -1,0 +1,14 @@
+<svg width="826" height="592" viewBox="0 0 826 592" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="826" height="592" rx="20" fill="url(#paint0_linear_108_60)"/>
+<g clip-path="url(#paint1_diamond_108_60_clip_path)" data-figma-skip-parse="true"><g transform="matrix(0.321446 0.501982 -0.730566 0.518352 413.503 296.529)"><rect x="0" y="0" width="810.389" height="568.802" fill="url(#paint1_diamond_108_60)" opacity="0.4" shape-rendering="crispEdges"/><rect x="0" y="0" width="810.389" height="568.802" transform="scale(1 -1)" fill="url(#paint1_diamond_108_60)" opacity="0.4" shape-rendering="crispEdges"/><rect x="0" y="0" width="810.389" height="568.802" transform="scale(-1 1)" fill="url(#paint1_diamond_108_60)" opacity="0.4" shape-rendering="crispEdges"/><rect x="0" y="0" width="810.389" height="568.802" transform="scale(-1)" fill="url(#paint1_diamond_108_60)" opacity="0.4" shape-rendering="crispEdges"/></g></g><rect width="826" height="592" rx="20" data-figma-gradient-fill="{&#34;type&#34;:&#34;GRADIENT_DIAMOND&#34;,&#34;stops&#34;:[{&#34;color&#34;:{&#34;r&#34;:0.0,&#34;g&#34;:0.56862747669219971,&#34;b&#34;:0.67843139171600342,&#34;a&#34;:1.0},&#34;position&#34;:0.0},{&#34;color&#34;:{&#34;r&#34;:1.0,&#34;g&#34;:0.95686274766921997,&#34;b&#34;:0.89411765336990356,&#34;a&#34;:1.0},&#34;position&#34;:1.0}],&#34;stopsVar&#34;:[{&#34;color&#34;:{&#34;r&#34;:0.0,&#34;g&#34;:0.56862747669219971,&#34;b&#34;:0.67843139171600342,&#34;a&#34;:1.0},&#34;position&#34;:0.0},{&#34;color&#34;:{&#34;r&#34;:1.0,&#34;g&#34;:0.95686274766921997,&#34;b&#34;:0.89411765336990356,&#34;a&#34;:1.0},&#34;position&#34;:1.0}],&#34;transform&#34;:{&#34;m00&#34;:642.89160156250,&#34;m01&#34;:-1461.131347656250,&#34;m02&#34;:822.62292480468750,&#34;m10&#34;:1003.9642333984375,&#34;m11&#34;:1036.7039794921875,&#34;m12&#34;:-723.80462646484375},&#34;opacity&#34;:0.40000000596046448,&#34;blendMode&#34;:&#34;NORMAL&#34;,&#34;visible&#34;:true}"/>
+<defs>
+<clipPath id="paint1_diamond_108_60_clip_path"><rect width="826" height="592" rx="20"/></clipPath><linearGradient id="paint0_linear_108_60" x1="856.47" y1="592" x2="-165.115" y2="382.234" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FBCF70"/>
+<stop offset="1" stop-color="#0573F1"/>
+</linearGradient>
+<linearGradient id="paint1_diamond_108_60" x1="0" y1="0" x2="500" y2="500" gradientUnits="userSpaceOnUse">
+<stop stop-color="#0091AD"/>
+<stop offset="1" stop-color="#FFF4E4"/>
+</linearGradient>
+</defs>
+</svg>
