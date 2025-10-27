@@ -1,5 +1,5 @@
 // src/components/pages/home/Metric.tsx
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { metrics } from "@/lib/utils"; // Load metrics data
@@ -11,6 +11,8 @@ export function Metric() {
   const copyRef = useRef<HTMLDivElement | null>(null);
   const metricRefs = useRef<(HTMLDivElement | null)[]>([]);
   const numberRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const highlightRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const highlightLineRef = useRef<HTMLParagraphElement | null>(null);
 
   useEffect(() => {
     if (!sectionRef.current) {
@@ -28,6 +30,40 @@ export function Metric() {
             trigger: sectionRef.current,
             start: "top 75%",
           },
+        });
+      }
+
+      const highlightEls = highlightRefs.current.filter(
+        (highlight): highlight is HTMLSpanElement => !!highlight,
+      );
+
+      if (highlightEls.length && highlightLineRef.current) {
+        gsap.set(highlightEls, {
+          backgroundSize: "0% 100%",
+          backgroundPosition: "0 100%",
+        });
+
+        const highlightTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: highlightLineRef.current,
+            start: "top 50%",
+            end: "bottom 50%",
+            scrub: 1,
+            markers: true,
+          },
+        });
+
+        highlightEls.forEach((highlight, index) => {
+          highlightTimeline.to(
+            highlight,
+            {
+              backgroundSize: "100% 100%",
+              color: "#0a0903",
+              duration: 0.6,
+              ease: "power2.out",
+            },
+            index * 0.35,
+          );
         });
       }
 
@@ -87,6 +123,15 @@ export function Metric() {
 
   metricRefs.current = metricRefs.current.slice(0, metrics.length);
   numberRefs.current = numberRefs.current.slice(0, metrics.length);
+  highlightRefs.current = highlightRefs.current.slice(0, 5);
+
+  const highlightStyle: CSSProperties = {
+    backgroundImage: "linear-gradient(90deg, #f4d06f, #f4d06f)",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "0 100%",
+    backgroundSize: "0% 100%",
+    display: "inline-block",
+  };
 
   return (
     <section
@@ -99,8 +144,58 @@ export function Metric() {
         <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-32">
           <div ref={copyRef} className="flex flex-col gap-6">
             <div className="max-w-4xl text-[clamp(2rem,4vw,3rem)] leading-[1.3] font-semibold">
-              <p className="m-0">
-                We design BeeBlast so that you do not need to worry about taxes, bookkeeping, accounting and can just focus on your business.
+              <p ref={highlightLineRef} className="m-0">
+                We design BeeBlast so that you do {" "}
+                <span
+                  ref={(el) => {
+                    highlightRefs.current[0] = el;
+                  }}
+                  className="relative inline-block rounded-[12px] px-1"
+                  style={highlightStyle}
+                >
+                  not
+                </span>{" "}
+                need to{" "}
+                <span
+                  ref={(el) => {
+                    highlightRefs.current[1] = el;
+                  }}
+                  className="relative inline-block rounded-[12px] px-1"
+                  style={highlightStyle}
+                >
+                  worry
+                </span>{" "}
+                about {" "}
+                <span
+                  ref={(el) => {
+                    highlightRefs.current[2] = el;
+                  }}
+                  className="relative inline-block rounded-[12px] px-1"
+                  style={highlightStyle}
+                >
+                  taxes, bookkeeping, accounting
+                </span>{" "}
+                and can just {" "}
+                <span
+                  ref={(el) => {
+                    highlightRefs.current[3] = el;
+                  }}
+                  className="relative inline-block rounded-[12px] px-1"
+                  style={highlightStyle}
+                >
+                  focus
+                </span>{" "}
+                on your {" "}
+                <span
+                  ref={(el) => {
+                    highlightRefs.current[4] = el;
+                  }}
+                  className="relative inline-block rounded-[12px] px-1"
+                  style={highlightStyle}
+                >
+                  business
+                </span>
+                .
               </p>
             </div>
             <p className="m-0 max-w-2xl text-[1rem] leading-[1.7] text-[#f7f3f3]/75">
@@ -108,7 +203,7 @@ export function Metric() {
             </p>
           </div>
 
-          <div className="overflow-hidden rounded-[28px] border border-white/10 bg-[#0b0904]/65 backdrop-blur-sm">
+          <div className="overflow-hidden rounded-[28px]">
             <div className="flex flex-col divide-y divide-white/10 md:flex-row md:divide-y-0 md:divide-x">
               {metrics.map((metric, index) => (
                 <div
@@ -116,7 +211,7 @@ export function Metric() {
                   ref={(el) => {
                     metricRefs.current[index] = el;
                   }}
-                  className="flex flex-1 flex-col gap-4 px-8 py-10 md:px-10"
+                  className={`flex flex-1 flex-col gap-4 py-10 ${index === 1 ? ' px-8 md:px-10' : ' pr-25 md:pr-29'}`}
                 >
                   <span
                     ref={(el) => {
