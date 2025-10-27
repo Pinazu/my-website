@@ -107,33 +107,10 @@ export function Metric() {
             scrollTrigger: {
               trigger: sectionRef.current,
               start: "top 60%",
-              once: true,
+              toggleActions: "restart none none reset",
             },
-<<<<<<< ours
             onUpdate: () => {
               numberEl.textContent = Math.round(counter.value) + suffix;
-=======
-          });
-
-          const resetNumber = () => {
-            tween.pause(0);
-            counter.value = 0;
-            numberEl.textContent = formatValue(0);
-          };
-
-          // Start from zero so the counter animates each time it enters the viewport.
-          resetNumber();
-
-          ScrollTrigger.create({
-            trigger: numberEl,
-            start: "top 75%",
-            end: "bottom 25%",
-            onEnter: () => {
-              tween.restart();
-            },
-            onEnterBack: () => {
-              tween.restart();
->>>>>>> theirs
             },
           });
         });
