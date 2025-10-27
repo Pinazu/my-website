@@ -76,43 +76,45 @@ export function Features() {
       className="relative w-full max-w-full z-10 bg-[#0a0903] overflow-hidden"
       data-name="Features Section"
     >
-      <div className="flex flex-row gap-8 px-30 py-30 min-h-screen">
-        <div className="flex flex-col gap-8 flex-shrink-0 max-w-3xl">
-          <img
-            src={imgLilyBlueSummer}
-            alt="BeeBlast Preview"
-            className="w-full h-[592px] rounded-[20px] object-cover"
-            data-name="Background Preview"
-          />
-          <div className="flex flex-col w-full items-start text-left">
-            <div className="text-[#f7f3f3] text-[40px] leading-[1.3] m-0">
-              Introducing BeeBlast
-            </div>
-            <div className="text-[#f7f3f3] text-[40px] leading-[1.3] m-0">
-              your effortless tax assistant.
+      <div className="relative mx-auto w-full px-[10px] sm:px-[30px]">
+        <div className="mx-auto flex flex-row gap-8 py-30 min-h-screen max-w-[1440px] items-center">
+          <div className="flex flex-col gap-8 flex-shrink-0 max-w-3xl">
+            <img
+              src={imgLilyBlueSummer}
+              alt="BeeBlast Preview"
+              className="w-full h-[592px] rounded-[20px] object-cover"
+              data-name="Background Preview"
+            />
+            <div className="flex flex-col w-full items-start text-left">
+              <div className="text-[#f7f3f3] text-[40px] leading-[1.3] m-0">
+                Introducing BeeBlast
+              </div>
+              <div className="text-[#f7f3f3] text-[40px] leading-[1.3] m-0">
+                your effortless tax assistant.
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="relative flex-1 w-full overflow-hidden">
-          {/* Stack cards in one visual position while the wrapper scales responsively */}
-          <div className="relative w-full min-h-[420px] sm:min-h-[520px] lg:min-h-[600px]">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                ref={(el) => {
-                  featureRefs.current[index] = el;
-                }}
-                className="absolute inset-0 flex flex-col justify-center gap-6 px-6 py-8 sm:px-10 sm:py-12 bg-[#0a0903] backdrop-blur-lg"
-              >
-                <p className="text-[2.25rem] sm:text-[2.5rem] leading-[1.25] m-0 text-[#f7f3f3]">
-                  {feature.title}
-                </p>
-                <p className="text-[1.125rem] sm:text-[1.25rem] leading-[1.5] text-[#f7f3f3]/90">
-                  {feature.description}
-                </p>
-              </div>
-            ))}
+          <div className="relative flex-1 w-full overflow-hidden">
+            {/* Stack cards in one visual position while the wrapper scales responsively */}
+            <div className="relative w-full min-h-[420px] sm:min-h-[520px] lg:min-h-[600px]">
+              {features.map((feature, index) => (
+                <div
+                  key={index}
+                  ref={(el) => {
+                    featureRefs.current[index] = el;
+                  }}
+                  className="absolute inset-0 flex flex-col gap-6 px-6 py-8 sm:px-10 sm:py-12 bg-[#0a0903] backdrop-blur-lg"
+                >
+                  <p className="text-[2.25rem] sm:text-[2.5rem] leading-[1.25] m-0 text-[#f7f3f3]">
+                    {feature.title}
+                  </p>
+                  <p className="text-[1.125rem] sm:text-[1.25rem] leading-[1.5] text-[#f7f3f3]/90">
+                    {feature.description}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

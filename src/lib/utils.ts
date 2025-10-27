@@ -118,3 +118,67 @@ export const words = [
   "imposte,",
   "impuestos,"
 ];
+
+export const footerColumns = [
+  {
+    id: "product",
+    sections: [
+      {
+        title: "Product",
+        links: [
+          { label: "Features", href: "/features" },
+          { label: "Security", href: "/security" },
+        ],
+      },
+      {
+        title: "Researchs",
+        links: [
+          { label: "Research Index", href: "/research-index" },
+          { label: "Research Overviews", href: "/research-overviews" },
+          { label: "Research Residency", href: "/research-residency" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "resource",
+    sections: [
+      {
+        title: "Resource",
+        links: [
+          { label: "Blogs", href: "/blogs" },
+          { label: "Case Studies", href: "/case-studies" },
+          { label: "Customer Stories", href: "/customer-stories" },
+        ],
+      },
+      {
+        title: "Platform",
+        links: [
+          { label: "Accountant Assistant", href: "/accountant-assistant" },
+          { label: "Workflow Agent", href: "/workflow-agent" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "company",
+    sections: [
+      {
+        title: "Company",
+        links: [
+          { label: "About Us", href: "/about-us" },
+          { label: "Careers", href: "/careers" },
+          { label: "Privacy Policies", href: "/privacy-policies" },
+          { label: "Cookies Policies", href: "/cookies-policies" },
+        ],
+      },
+      {
+        title: "More",
+        links: [
+          { label: "News", href: "/news" },
+          { label: "Podcast", href: "/podcast" },
+        ],
+      },
+    ],
+  },
+];

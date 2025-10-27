@@ -14,7 +14,7 @@ export default function App() {
   return (
     <div className="bg-[#f7f3f3] relative w-full min-h-screen overflow-x-hidden" data-name="Main page" data-node-id="1:13">
       {/* Fixed Background Image */}
-      <div className="fixed inset-0 w-full h-screen min-h-[600px] max-h-[1080px] z-0" data-name="Fixed Background" data-node-id="33:28">
+      <div className="fixed inset-0 w-full h-screen min-h-[600px] z-0" data-name="Fixed Background" data-node-id="33:28">
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
           <div className="absolute inset-0 overflow-hidden">
             <img alt="" className="absolute inset-0 w-full h-full object-cover" src={imgBackground} />

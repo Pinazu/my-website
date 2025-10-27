@@ -43,15 +43,15 @@ export function MainTitle() {
   }, []);
 
   return (
-    <section className="relative w-full h-screen min-h-[600px] max-h-[1080px] flex items-center justify-center overflow-hidden z-5" data-name="Main Title" data-node-id="15:108">
-      <div className="relative z-10 w-full max-w-full px-30">
-        <div className="max-w-[1440px]">
+    <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden z-5" data-name="Main Title" data-node-id="15:108">
+      <div className="relative z-10 mx-auto w-full px-30">
+        <div className="mx-auto w-full max-w-[1440px]">
           <h1 className="text-[clamp(3rem,8vw,6.25rem)] leading-[1.3] text-[#f7f3f3] mb-8" data-node-id="1:25">
             <span className="block relative">
               Your <span className="relative inline-block overflow-visible">
                 <span ref={wordRef} className="inline-block">taxes,</span>
                 <span ref={decoratorRef} className="absolute left-0 -bottom-5 w-full h-[0.4em]" data-node-id="1:104">
-                  <img alt="" className="block w-full h-full object-contain" src={imgVector1} />
+                  <img alt="" className="block w-full h-full object-fill" src={imgVector1} />
                 </span>
               </span>
             </span>
