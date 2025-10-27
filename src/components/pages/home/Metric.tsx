@@ -1,14 +1,10 @@
 // src/components/pages/home/Metric.tsx
-const metrics = [
-  "100% Accuracy",
-  "90% less time spent on bookkeeping",
-  "50% Less expense",
-];
+import { metrics } from "@/lib/utils"; // Load metric data
 
 export function Metric() {
   return (
-    <section className="relative z-10 w-full bg-[#0a0903] py-24 text-[#f7f3f3]" data-name="Success Metric Section" data-node-id="17:33">
-      <div className="relative mx-auto w-full px-[10px] sm:px-[30px]">
+    <section className="relative z-10 w-full min-h-screen bg-[#0a0903] text-[#f7f3f3]" data-name="Success Metric Section" data-node-id="17:33">
+      <div className="relative mx-auto w-full px-[10px] sm:px-[30px] py-30">
         <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-16">
           <div className="max-w-4xl text-[clamp(2rem,4vw,3rem)] leading-[1.3] font-semibold">
             <p className="m-0">

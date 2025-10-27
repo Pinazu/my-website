@@ -20,17 +20,16 @@ const blockColors = [
 
 export function Security() {
   return (
-    <section className="relative z-10 w-full bg-[#0a0903] py-24 text-[#f7f3f3]" data-name="Security Section" data-node-id="17:162">
-      <div className="relative mx-auto w-full px-[10px] sm:px-[30px]">
+    <section className="relative z-10 w-full min-h-screen bg-[#0a0903] text-[#f7f3f3]" data-name="Security Section" data-node-id="17:162">
+      <div className="relative mx-auto w-full px-[10px] sm:px-[30px] py-30">
         <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-16">
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] items-start">
-            <p className="text-[clamp(2.25rem,4vw,2.75rem)] leading-[1.3] m-0">
-              We priority your security and data.
-            </p>
-            <p className="text-[1.125rem] leading-[1.6] text-[#f7f3f3]/90 m-0">
-              BeeBlast is built with privacy-first principles and enterprise-grade encryption — so you stay fully in control of your data at all times.
-            </p>
+          <div className="flex flex-col items-start">
+            <p className="text-[40px] leading-[1.3] m-0">Security isn't optional for us</p>
+            <p className="text-[40px] leading-[1.3] m-0">It's at the core of everything we build.</p>
           </div>
+          <p className="text-[1.125rem] leading-[1.6] text-[#f7f3f3]/90 m-0">
+            BeeBlast is built with privacy-first principles and enterprise-grade encryption — so you stay fully in control of your data at all times.
+          </p>
 
           <div className="grid gap-12 lg:grid-cols-[auto,1fr]">
             <div className="grid grid-cols-3 gap-4 w-fit mx-auto lg:mx-0">
@@ -50,11 +49,6 @@ export function Security() {
                 </p>
               ))}
             </div>
-          </div>
-
-          <div className="text-center text-[clamp(2rem,4vw,2.75rem)] leading-[1.3] font-semibold">
-            <p className="mb-2">Security isn't optional for us</p>
-            <p className="m-0">It's at the core of everything we build.</p>
           </div>
         </div>
       </div>

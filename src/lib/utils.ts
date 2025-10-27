@@ -182,3 +182,9 @@ export const footerColumns = [
     ],
   },
 ];
+
+export const metrics = [
+  "100% Accuracy",
+  "90% less time spent on bookkeeping",
+  "50% Less expense",
+];
