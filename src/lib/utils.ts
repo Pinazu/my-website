@@ -183,8 +183,63 @@ export const footerColumns = [
   },
 ];
 
+export const securities = [
+  {
+    title: "Rock-solid security",
+    summary: "Encryption, access, and observability move in lockstep so nothing slips through.",
+    items: [
+      {
+        heading: "Encryption",
+        copy:
+          "BeeBlast protects your data with end-to-end encryption (AES-256, TLS 1.3) and strict access control.",
+      },
+      {
+        heading: "Access controls",
+        copy:
+          "Attribute-Based Access Control ensures the right people see the right workspaces at the right time.",
+      },
+      {
+        heading: "Audit logs",
+        copy:
+          "Comprehensive logging and tracing keep every agent action visible, exportable, and alert-ready.",
+      },
+    ],
+  },
+  {
+    title: "Privacy is our top priority",
+    summary: "Your information never fuels models. It stays yours, always.",
+    items: [
+      {
+        heading: "Data ownership",
+        copy: "You decide what stays or goes, with instant delete across every workspace.",
+      },
+      {
+        heading: "No training on your data",
+        copy: "We never sell, store, or use your data for AI model training — full stop.",
+      },
+    ],
+  },
+  {
+    title: "Compliance you can trust",
+    summary: "Built to slot into enterprise governance with proof you can share in minutes.",
+    items: [
+      {
+        heading: "Standards",
+        copy: "SOC 2 Type II · ISO 27001 · GDPR",
+      },
+    ],
+  },
+];
+
 export const metrics = [
-  "100% Accuracy",
-  "90% less time spent on bookkeeping",
-  "50% Less expense",
+  {
+    value: "90%",
+    label: "Less time on bookkeeping",
+    description: "Automations remove the manual loops that used to slow you down.",
+  },
+  {
+    value: "50%",
+    label: "Lower operational expense",
+    description: "Streamlined workflows mean fewer tools, fewer hours, and more focus.",
+  },
 ];

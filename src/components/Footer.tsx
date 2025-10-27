@@ -22,7 +22,7 @@ export function Footer() {
               </div>
               <div className="flex items-center gap-4">
                 <img alt="" className="h-2.5 w-2.5" src={imgEllipse1} />
-                <p className="font-['Inter',sans-serif] text-sm font-semibold tracking-[0.2em] text-[#90959a]">Language</p>
+                <p className="text-[1rem] font-semibold tracking-[0.2em] text-[#90959a]">Language</p>
                 <div className="flex items-center gap-3 font-['Inter',sans-serif] text-[20px] font-semibold">
                   <button type="button" className="text-[#f7f3f3] transition-colors hover:text-[#f4d06f]">
                     EN
@@ -39,13 +39,13 @@ export function Footer() {
                 <div key={column.id} className="flex min-w-[100px] max-w-[290px] flex-1 flex-col gap-10">
                   {column.sections.map((section) => (
                     <div key={section.title}>
-                      <p className="font-['Inter',sans-serif] text-[15px] font-semibold text-[#90959a]">{section.title}</p>
+                      <p className="text-[0.9rem] font-semibold text-[#90959a]">{section.title}</p>
                       <ul className="mt-4 flex flex-col gap-3">
                         {section.links.map((link) => (
                           <li key={link.href}>
                             <a
                               href={link.href}
-                              className="font-['Inter',sans-serif] text-[16px] font-semibold text-[#f7f3f3] transition-colors hover:text-[#f4d06f]"
+                              className="text-[1rem] font-semibold text-[#f7f3f3] transition-colors hover:text-[#f4d06f]"
                             >
                               {link.label}
                             </a>

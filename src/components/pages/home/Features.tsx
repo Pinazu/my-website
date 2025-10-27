@@ -109,7 +109,7 @@ export function Features() {
                   <p className="text-[2.25rem] sm:text-[2.5rem] leading-[1.25] m-0 text-[#f7f3f3]">
                     {feature.title}
                   </p>
-                  <p className="text-[1.125rem] sm:text-[1.25rem] leading-[1.5] text-[#f7f3f3]/90">
+                  <p className="text-[1.125rem] sm:text-[1.25rem] leading-[1.5] text-[#f7f3f3]/65">
                     {feature.description}
                   </p>
                 </div>

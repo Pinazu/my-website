@@ -1,54 +1,118 @@
 // src/components/pages/home/Security.tsx
-const securityFacts = [
-  "BeeBlast protects your data with end-to-end encryption (AES-256, TLS 1.3) and strict access control.",
-  "You always own and control your data — choose to keep or permanently delete it anytime.",
-  "BeeBlast meets major security standards including GDPR, ISO 27001, and SOC 2 Type II compliance. You can follow this link for verification yourself.",
-  "Our Attribute-Based Access Control (ABAC) ensures precise permissions for every user and workspace.",
-  "Comprehensive logging and tracing let you monitor your agent's actions and your own activity in real time.",
-  "We never sell, store, or use your data for AI model training — your information stays yours, always.",
-];
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { securities } from "@/lib/utils"; // Load security sections data
 
-const blockColors = [
-  "#211e0a",
-  "#f7f3f3",
-  "#90959a",
-  "#1098f7",
-  "#f4d06f",
-  "#ff9f1c",
-  "#d6efff",
-];
+gsap.registerPlugin(ScrollTrigger);
 
 export function Security() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const headingRef = useRef<HTMLDivElement | null>(null);
+  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    if (!sectionRef.current) {
+      return;
+    }
+
+    const ctx = gsap.context(() => {
+      if (headingRef.current) {
+        gsap.from(headingRef.current.querySelectorAll("[data-animate='heading']"), {
+          opacity: 0,
+          y: 32,
+          duration: 0.9,
+          stagger: 0.12,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 72%",
+          },
+        });
+      }
+
+      const sections = sectionRefs.current.filter(
+        (row): row is HTMLDivElement => !!row,
+      );
+
+      if (sections.length) {
+        gsap.from(sections, {
+          opacity: 0,
+          y: 24,
+          duration: 0.8,
+          stagger: 0.12,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 68%",
+            once: true,
+          },
+        });
+      }
+
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  sectionRefs.current = sectionRefs.current.slice(0, securities.length);
+
   return (
-    <section className="relative z-10 w-full min-h-screen bg-[#0a0903] text-[#f7f3f3]" data-name="Security Section" data-node-id="17:162">
+    <section
+      ref={sectionRef}
+      className="relative z-10 w-full bg-[#0a0903] text-[#f7f3f3]"
+      data-name="Security Section"
+      data-node-id="17:162"
+    >
       <div className="relative mx-auto w-full px-[10px] sm:px-[30px] py-30">
         <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-16">
-          <div className="flex flex-col items-start">
-            <p className="text-[40px] leading-[1.3] m-0">Security isn't optional for us</p>
-            <p className="text-[40px] leading-[1.3] m-0">It's at the core of everything we build.</p>
+          <div ref={headingRef} className="flex flex-col gap-5 max-w-3xl">
+            <div
+              data-animate="heading"
+              className="text-[40px] leading-[1.25] m-0 flex flex-col gap-1"
+            >
+              <span>Security isn&apos;t optional for us.</span>
+              <span>It&apos;s at the core of everything we build.</span>
+            </div>
+            <p
+              data-animate="heading"
+              className="m-0 text-[1.125rem] leading-[1.7] text-[#f7f3f3]/82"
+            >
+              BeeBlast is built with privacy-first principles and enterprise-grade encryption — so you stay fully in control of your data at all times.
+            </p>
           </div>
-          <p className="text-[1.125rem] leading-[1.6] text-[#f7f3f3]/90 m-0">
-            BeeBlast is built with privacy-first principles and enterprise-grade encryption — so you stay fully in control of your data at all times.
-          </p>
 
-          <div className="grid gap-12 lg:grid-cols-[auto,1fr]">
-            <div className="grid grid-cols-3 gap-4 w-fit mx-auto lg:mx-0">
-              {blockColors.map((color, index) => (
-                <span
-                  // simple decorative blocks that echo the hero palette
-                  key={`${color}-${index}`}
-                  className="h-[74px] w-[67px] rounded-[12px]"
-                  style={{ backgroundColor: color }}
-                />
-              ))}
-            </div>
-            <div className="space-y-6 text-[1.125rem] leading-[1.6] text-[#f7f3f3]/90">
-              {securityFacts.map((fact) => (
-                <p key={fact} className="m-0">
-                  {fact}
-                </p>
-              ))}
-            </div>
+          <div className="flex flex-col divide-y divide-white/10">
+            {securities.map((section, index) => (
+              <div
+                key={section.title}
+                ref={(el) => {
+                  sectionRefs.current[index] = el;
+                }}
+                className="grid gap-6 py-8 first:pt-0 last:pb-0 md:grid-cols-2 md:gap-12"
+              >
+                <div className="space-y-2 md:pr-12">
+                  <p className="m-0 text-[1.2rem] font-semibold leading-[1.35] text-[#f7f3f3]">
+                    {section.title}
+                  </p>
+                  <p className="m-0 text-[1.125rem] leading-[1.6] text-[#f7f3f3]/65">
+                    {section.summary}
+                  </p>
+                </div>
+                <div className="flex flex-col gap-5 md:border-l md:border-white/10 md:pl-12">
+                  {section.items.map((item) => (
+                    <div key={`${section.title}-${item.heading}`} className="space-y-1">
+                      <p className="m-0 text-[1rem] font-medium leading-[1.5] text-[#f7f3f3]/90">
+                        {item.heading}
+                      </p>
+                      <p className="m-0 text-[1rem] leading-[1.65] text-[#f7f3f3]/75">
+                        {item.copy}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
