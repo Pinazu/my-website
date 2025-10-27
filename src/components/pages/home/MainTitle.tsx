@@ -44,8 +44,8 @@ export function MainTitle() {
 
   return (
     <section className="relative w-full h-screen min-h-[600px] max-h-[1080px] flex items-center justify-center overflow-hidden z-5" data-name="Main Title" data-node-id="15:108">
-      <div className="relative z-10 w-full max-w-full px-[120px] py-8">
-        <div className="max-w-[1074px]">
+      <div className="relative z-10 w-full max-w-full px-30">
+        <div className="max-w-[1440px]">
           <h1 className="text-[clamp(3rem,8vw,6.25rem)] leading-[1.3] text-[#f7f3f3] mb-8" data-node-id="1:25">
             <span className="block relative">
               Your <span className="relative inline-block overflow-visible">
